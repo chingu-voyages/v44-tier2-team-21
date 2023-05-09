@@ -1,4 +1,4 @@
-import React, { createContext, useReducer } from "react";
+import React, { createContext, useReducer, useState } from "react";
 import BotReducer from "./BotReducer";
 
 // DUMMY DATA
@@ -30,12 +30,13 @@ export const BotContext = createContext(initialstate);
 
 // PROVIDER
 export const BotProvider = ({ children }) => {
-  const [state, dispatch] = useReducer(BotReducer, initialstate);
-
+  // const [state, dispatch] = useReducer(BotReducer, initialstate);
+  const [mainState, setMainState] = useState(initialstate);
   return (
     <BotContext.Provider
       value={{
-        botdata: state.botdata,
+        botdata: mainState?.botdata,
+        setMainState,
       }}
     >
       {children}
