@@ -8,26 +8,22 @@ import { BotContext } from "../context/botcontext/BotState";
 
 const Controls = () => {
   const [show, setShow] = useState(false);
-  const context = useContext(BotContext);
+  const { botdata, setMainState } = useContext(BotContext);
 
+  // setMainState({ botdata: [...botdata, ] })
+  console.log(botdata);
   return (
-    <div className="w-full h-full bg-[#1E1E1E] text-[#FFFFFF] text-center border-4 rounded-md border-[#FF0000] max-w-sm">
+    <div className="w-full h-full bg-[#1E1E1E] text-[#FFFFFF] text-center border-4 rounded-md border-[#FF0000] max-w-sm px-5">
       <h2 className="mb-7 text-2xl mt-5">GAME CONFIGURATION</h2>
-      <div className="bot-added border rounded-xl flex flex-row space-x-10 mx-4 my-10 p-2 items-center">
-        {/*map bots here*/}
-        {/* {botsData.map((bot) => {
+      {botdata.map((bot) => {
         return (
-          <div className="bot-added">
-            <img src={icon1} alt="" />
+          <div className="bot-added border rounded-xl flex flex-row space-x-10 my-10 p-2 items-center">
+            <img src={icon1} alt="" className="w-10" />
             <p>{bot.name}</p>
-            <img src={menu} alt="" />
+            <img src={menu} alt="" className="w-8" />
           </div>
         );
-      })} */}
-        <img src={icon1} alt="" className="w-10" />
-        <p>bot1</p>
-        <img src={menu} alt="" className="w-8" />
-      </div>
+      })}
       {!show && (
         <button
           onClick={() => setShow(!show)}
