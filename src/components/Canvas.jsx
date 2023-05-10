@@ -1,25 +1,42 @@
-import React from 'react';
-import PropTypes from 'prop-types';
+import { useRef, useEffect } from 'react';
 
-const Canvas = ({ draw, height, width }) => {
-  const canvas = React.useRef();
+function Canvas() {
+  const canvasRef = useRef(null);
 
-  React.useEffect(() => {
-    const context = canvas.current.getContext('2d');
-    draw(context);
-  });
+  useEffect(() => {
+    const canvas = canvasRef.current;
+    const context = canvas.getContext('2d');
 
-  return (
-    <div className='border-4 rounded-md border-[#0029ff]'>
-      <canvas ref={canvas} height={height} width={width} />{' '}
-    </div>
-  );
-};
+    let x1 = 0;
+    let y1 = 0;
+    let x2 = 200;
+    let y2 = 100;
 
-Canvas.propTypes = {
-  draw: PropTypes.func.isRequired,
-  height: PropTypes.number.isRequired,
-  width: PropTypes.number.isRequired,
-};
+    function animate() {
+      requestAnimationFrame(animate);
+      context.clearRect(0, 0, canvas.width, canvas.height);
+
+      // Draw the first square at a new position
+      context.fillStyle = 'blue';
+      context.fillRect(x1, y1, 50, 50);
+
+      // Draw the second square at a new position
+      context.fillStyle = 'red';
+      context.fillRect(x2, y2, 50, 50);
+
+      // Update the position of the first square
+      x1 += 1;
+      y1 += 2;
+
+      // Update the position of the second square
+      x2 -= 2;
+      y2 += 1;
+    }
+
+    animate();
+  }, []);
+
+  return <canvas ref={canvasRef} width={400} height={400} />;
+}
 
 export default Canvas;
