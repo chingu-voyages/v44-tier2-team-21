@@ -20,29 +20,13 @@ function Canvas() {
       requestAnimationFrame(animate);
       context.clearRect(0, 0, canvas.width, canvas.height);
 
-      // Draw the first square at a new position
+      // Draw the first square
       context.fillStyle = 'blue';
       context.fillRect(x1, y1, 50, 50);
 
-      // Draw the second square at a new position
+      // Draw the second square
       context.fillStyle = 'red';
       context.fillRect(x2, y2, 50, 50);
-
-      // Check if the first square has reached the edges of the canvas
-      if (x1 + 50 >= canvas.width || x1 <= 0) {
-        x1Speed = -x1Speed;
-      }
-      if (y1 + 50 >= canvas.height || y1 <= 0) {
-        y1Speed = -y1Speed;
-      }
-
-      // Check if the second square has reached the edges of the canvas
-      if (x2 + 50 >= canvas.width || x2 <= 0) {
-        x2Speed = -x2Speed;
-      }
-      if (y2 + 50 >= canvas.height || y2 <= 0) {
-        y2Speed = -y2Speed;
-      }
 
       // Update the position of the first square
       x1 += x1Speed;
@@ -51,8 +35,41 @@ function Canvas() {
       // Update the position of the second square
       x2 += x2Speed;
       y2 += y2Speed;
-    }
 
+      // Check if the first square has reached the edges of the canvas
+      if (x1 + 50 >= canvas.width) {
+        x1 = canvas.width - 50;
+        x1Speed = Math.random() * -10;
+      } else if (x1 <= 0) {
+        x1 = 0;
+        x1Speed = Math.random() * 10;
+      }
+
+      if (y1 + 50 >= canvas.height) {
+        y1 = canvas.height - 50;
+        y1Speed = Math.random() * -10;
+      } else if (y1 <= 0) {
+        y1 = 0;
+        y1Speed = Math.random() * 10;
+      }
+
+      // Check if the second square has reached the edges of the canvas
+      if (x2 + 50 >= canvas.width) {
+        x2 = canvas.width - 50;
+        x2Speed = Math.random() * -10;
+      } else if (x2 <= 0) {
+        x2 = 0;
+        x2Speed = Math.random() * 10;
+      }
+
+      if (y2 + 50 >= canvas.height) {
+        y2 = canvas.height - 50;
+        y2Speed = Math.random() * -10;
+      } else if (y2 <= 0) {
+        y2 = 0;
+        y2Speed = Math.random() * 10;
+      }
+    }
     animate();
   }, []);
 
