@@ -6,21 +6,25 @@ const initialstate = {
   botdata: [
     {
       id: 1,
-      name: "Phil",
+      name: "DESTRUCTIION",
       bool: 0,
       initDirection: "west",
+      speed: 7,
+      x: 50,
+      y: 200,
+      color: "blue",
+      icon: "",
     },
     {
       id: 2,
-      name: "Phil",
+      name: "DEATH BOT",
       bool: 1,
       initDirection: "north",
-    },
-    {
-      id: 3,
-      name: "Phil",
-      bool: 0,
-      initDirection: "south",
+      speed: 1,
+      x: 400,
+      y: 200,
+      color: "red",
+      icon: "",
     },
   ],
 };
@@ -30,7 +34,6 @@ export const BotContext = createContext(initialstate);
 
 // PROVIDER
 export const BotProvider = ({ children }) => {
-  // const [state, dispatch] = useReducer(BotReducer, initialstate);
   const [mainState, setMainState] = useState(initialstate);
   return (
     <BotContext.Provider

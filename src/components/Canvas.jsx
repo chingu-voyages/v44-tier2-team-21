@@ -1,41 +1,53 @@
-import { useRef, useEffect } from 'react';
+import { useRef, useEffect, useContext } from "react";
+
+import { BotContext } from "../context/botcontext/BotState";
 
 function Canvas() {
   const canvasRef = useRef(null);
+  const data = useContext(BotContext);
+  const { botdata } = data;
+
+  const Bot1 = botdata[0];
+  const Bot2 = botdata[1];
 
   useEffect(() => {
     const canvas = canvasRef.current;
-    const context = canvas.getContext('2d');
+    const context = canvas.getContext("2d");
 
-    let x1 = 80;
-    let y1 = 180;
-    let x2 = 200;
-    let y2 = 100;
-    let speed = 3;
+    // BLUE
+    let x1 = Bot1.x;
+    let y1 = Bot1.y;
+    // RED
+    let x2 = Bot2.x;
+    let y2 = Bot2.y;
+
     let angle1 = Math.random() * Math.PI * 2;
     let angle2 = Math.random() * Math.PI * 2;
 
     function animate() {
       requestAnimationFrame(animate);
+      // Stage Drawing
       context.clearRect(0, 0, canvas.width, canvas.height);
 
       // Draw the first square
-      context.fillStyle = 'blue';
+      context.fillStyle = Bot1.color;
       context.fillRect(x1, y1, 50, 50);
 
       // Draw the second square
-      context.fillStyle = 'red';
+      context.fillStyle = Bot2.color;
       context.fillRect(x2, y2, 50, 50);
 
-      // Update the position of the first square
-      let dx1 = speed * Math.cos(angle1);
-      let dy1 = speed * Math.sin(angle1);
+      //Randomize start.
+
+      // Update the position of the first square BLUE
+      let dx1 = Bot1.speed * Math.cos(angle1);
+      let dy1 = Bot1.speed * Math.sin(angle1);
       x1 += dx1;
       y1 += dy1;
 
-      // Update the position of the second square
-      let dx2 = speed * Math.cos(angle2);
-      let dy2 = speed * Math.sin(angle2);
+      // Update the position of the second square RED
+      let dx2 = Bot2.speed * Math.cos(angle2);
+      let dy2 = Bot2.speed * Math.sin(angle2);
       x2 += dx2;
       y2 += dy2;
 
