@@ -1,4 +1,5 @@
 import { useRef, useEffect, useContext } from "react";
+import icon1 from "../assets/ghoss.svg";
 
 import { BotContext } from "../context/botcontext/BotState";
 
@@ -13,6 +14,9 @@ function Canvas() {
   useEffect(() => {
     const canvas = canvasRef.current;
     const context = canvas.getContext("2d");
+
+    const img = new Image();
+    img.src = icon1;
 
     // BLUE
     let x1 = Bot1.x;
@@ -31,13 +35,11 @@ function Canvas() {
 
       // Draw the first square
       context.fillStyle = Bot1.color;
-      context.fillRect(x1, y1, 50, 50);
+      context.drawImage(img, x1, y1, 50, 50);
 
       // Draw the second square
       context.fillStyle = Bot2.color;
-      context.fillRect(x2, y2, 50, 50);
-
-      //Randomize start.
+      context.drawImage(img, x2, y2, 50, 50);
 
       // Update the position of the first square BLUE
       let dx1 = Bot1.speed * Math.cos(angle1);

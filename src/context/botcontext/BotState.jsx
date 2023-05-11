@@ -9,7 +9,7 @@ const initialstate = {
       name: "DESTRUCTIION",
       bool: 0,
       initDirection: "west",
-      speed: 7,
+      speed: 2,
       x: 50,
       y: 200,
       color: "blue",
