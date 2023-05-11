@@ -10,23 +10,23 @@ const Controls = () => {
   const [show, setShow] = useState(false);
   const { botdata, setMainState } = useContext(BotContext);
 
-  const [name, setName] = useState("");
-  const [bool, setBool] = useState(0);
-  const [initDirection, setDirection] = useState("");
-
-  //get bot data
-  const formData = {
-    id: botdata.length + 1,
-    name,
-    bool,
-    initDirection,
-  };
+  const nameRef = useRef("");
+  const boolRef = useRef(0);
+  const directionRef = useRef("");
 
   const handleSubmit = (e) => {
     e.preventDefault;
 
+    const formData = {
+      id: botdata.length + 1,
+      name: nameRef.current.value,
+      bool: boolRef.current.value,
+      initDirection: directionRef.current.value,
+    };
+
     setMainState({ botdata: [...botdata, formData] });
     setShow(!show);
+    console.log(formData);
   };
 
   return (
@@ -67,7 +67,7 @@ const Controls = () => {
                 type="text"
                 placeholder="NAME"
                 className="w-3/5 p-2 border border-white rounded-xl bg-transparent"
-                onChange={(e) => setName(e.target.value)}
+                ref={nameRef}
               />
             </div>
             <div className="bool form-group m-3">
@@ -78,7 +78,7 @@ const Controls = () => {
                 name="bool"
                 id="bool"
                 className="bool bg-transparent"
-                onChange={(e) => setBool(e.target.value)}
+                ref={boolRef}
               >
                 <option defaultValue="0" disabled selected>
                   BOOLEAN VALUE
@@ -95,7 +95,7 @@ const Controls = () => {
                 name="init-direction"
                 id="init-direction"
                 className="bg-transparent"
-                onChange={(e) => setDirection(e.target.value)}
+                ref={directionRef}
               >
                 <option disabled selected>
                   INITIAL DIRECTION
