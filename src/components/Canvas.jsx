@@ -1,7 +1,13 @@
 import { useRef, useEffect } from 'react';
+import PropTypes from 'prop-types';
 
-function Canvas() {
+Canvas.propTypes = {
+  isAnimating: PropTypes.bool.isRequired,
+};
+
+function Canvas({ isAnimating }) {
   const canvasRef = useRef(null);
+  let animationFrameId = useRef(null);
 
   useEffect(() => {
     const canvas = canvasRef.current;
@@ -16,7 +22,6 @@ function Canvas() {
     let angle2 = Math.random() < 0.5 ? 0 : Math.PI / 2;
 
     function animate() {
-      requestAnimationFrame(animate);
       context.clearRect(0, 0, canvas.width, canvas.height);
 
       // Draw the first square
@@ -85,9 +90,19 @@ function Canvas() {
         y2 = 0;
         angle2 = Math.random() * Math.PI * 2;
       }
+      if (isAnimating) {
+        animationFrameId.current = requestAnimationFrame(animate);
+      }
     }
-    animate();
-  }, []);
+
+    if (isAnimating) {
+      animate();
+    }
+
+    return () => {
+      cancelAnimationFrame(animationFrameId.current);
+    };
+  }, [isAnimating]);
 
   return (
     <canvas
