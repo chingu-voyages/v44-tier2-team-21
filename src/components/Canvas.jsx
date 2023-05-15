@@ -12,8 +12,8 @@ function Canvas() {
     let x2 = 200;
     let y2 = 100;
     let speed = 3;
-    let angle1 = Math.random() * Math.PI * 2;
-    let angle2 = Math.random() * Math.PI * 2;
+    let angle1 = Math.random() < 0.5 ? 0 : Math.PI / 2;
+    let angle2 = Math.random() < 0.5 ? 0 : Math.PI / 2;
 
     function animate() {
       requestAnimationFrame(animate);
@@ -42,35 +42,35 @@ function Canvas() {
       // Check if the first square has reached the edges of the canvas
       if (x1 + 50 >= canvas.width) {
         x1 = canvas.width - 50;
-        angle1 = Math.PI - angle1;
+        angle1 = Math.random() * Math.PI * 2; // Update angle1 with a new random direction
       } else if (x1 <= 0) {
         x1 = 0;
-        angle1 = Math.PI - angle1;
+        angle1 = Math.random() * Math.PI * 2;
       }
 
       if (y1 + 50 >= canvas.height) {
         y1 = canvas.height - 50;
-        angle1 = 2 * Math.PI - angle1;
+        angle1 = Math.random() * Math.PI * 2;
       } else if (y1 <= 0) {
         y1 = 0;
-        angle1 = 2 * Math.PI - angle1;
+        angle1 = Math.random() * Math.PI * 2;
       }
 
       // Check if the second square has reached the edges of the canvas
       if (x2 + 50 >= canvas.width) {
         x2 = canvas.width - 50;
-        angle2 = Math.PI - angle2;
+        angle2 = Math.random() * Math.PI * 2; // Update angle2 with a new random direction
       } else if (x2 <= 0) {
         x2 = 0;
-        angle2 = Math.PI - angle2;
+        angle2 = Math.random() * Math.PI * 2;
       }
 
       if (y2 + 50 >= canvas.height) {
         y2 = canvas.height - 50;
-        angle2 = 2 * Math.PI - angle2;
+        angle2 = Math.random() * Math.PI * 2;
       } else if (y2 <= 0) {
         y2 = 0;
-        angle2 = 2 * Math.PI - angle2;
+        angle2 = Math.random() * Math.PI * 2;
       }
     }
     animate();
