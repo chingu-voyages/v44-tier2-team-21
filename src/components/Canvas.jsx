@@ -39,6 +39,19 @@ function Canvas() {
       x2 += dx2;
       y2 += dy2;
 
+      if (
+        x1 < x2 + 50 &&
+        x1 + 50 > x2 &&
+        y1 < y2 + 50 &&
+        y1 + 50 > y2
+      ) {
+        // Handle the collision (Change colors for now)
+        context.fillStyle = 'green';
+        context.fillRect(x1, y1, 50, 50);
+        context.fillStyle = 'yellow';
+        context.fillRect(x2, y2, 50, 50);
+      }
+
       // Check if the first square has reached the edges of the canvas
       if (x1 + 50 >= canvas.width) {
         x1 = canvas.width - 50;
