@@ -9,18 +9,7 @@ const initialstate = {
       name: "Phil",
       bool: 0,
       initDirection: "west",
-    },
-    {
-      id: 2,
-      name: "Phil",
-      bool: 1,
-      initDirection: "north",
-    },
-    {
-      id: 3,
-      name: "Phil",
-      bool: 0,
-      initDirection: "south",
+      operation: "XOR",
     },
   ],
 };
