@@ -1,31 +1,33 @@
 export const AND = (b1, b2) => {
-  if (b1 & (b2 === 1)) {
-    return 'WIN';
+  if (b1 & b2 === 1) {
+    console.log('WIN');
   } else {
-    return 'TIE';
+    console.log('TIE');
   }
 };
 
 export const OR = (b1, b2) => {
   if (b1 || b2 === 1) {
-    return 'WIN';
+    console.log('WIN');
   } else {
-    return 'TIE';
+    console.log('TIE');
   }
 };
 
 export const XOR = (b1, b2) => {
   if (b1 === b2) {
-    return 'TIE';
+    console.log('TIE');
   } else {
-    return 'WIN';
+    console.log('WIN');
   }
 };
 
 export const NOR = (b1, b2) => {
   if (b1 || b2 === 0) {
-    return 'WIN';
+    console.log('WIN');
   } else {
-    return 'TIE';
+    console.log('TIE');
   }
 };
+
+// SWITCHED TO CONSOLE LOGS FOR TESTING.

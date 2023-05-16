@@ -4,6 +4,7 @@ import icon1 from "../assets/ghoss.svg";
 import icon2 from "../assets/ghosss.svg";
 import { BotContext } from "../context/botcontext/BotState";
 import Bot from "../factory/Bot";
+import {AND,OR,XOR,NOR} from '../helper/BoolFunctions'
 
 Canvas.propTypes = {
   isAnimating: PropTypes.bool.isRequired,
@@ -82,6 +83,26 @@ function Canvas({ isAnimating, speed }) {
         context.fillRect(x1, y1, 50, 50);
         context.fillStyle = "yellow";
         context.fillRect(x2, y2, 50, 50);
+
+
+      // SWITCH CASE TAKES OPERATIN FROM STATE OBJECT
+      switch ('AND') {
+          case 'AND':
+            AND(1,0)
+            break;
+          case 'OR':
+            OR(1,0)
+            break;
+          case 'XOR':
+            XOR(1,0)
+            break;
+          case 'NOR':
+            NOR(1,0)
+            break;
+
+          default:
+            break;
+        }
       }
 
       // Check if the first square has reached the edges of the canvas
