@@ -5,7 +5,7 @@ Canvas.propTypes = {
   isAnimating: PropTypes.bool.isRequired,
 };
 
-function Canvas({ isAnimating }) {
+function Canvas({ isAnimating, speed }) {
   const canvasRef = useRef(null);
   let animationFrameId = useRef(null);
 
@@ -17,7 +17,7 @@ function Canvas({ isAnimating }) {
     let y1 = 180;
     let x2 = 200;
     let y2 = 100;
-    let speed = 3;
+    // let speed = 3;
     let angle1 = Math.random() < 0.5 ? 0 : Math.PI / 2;
     let angle2 = Math.random() < 0.5 ? 0 : Math.PI / 2;
 
