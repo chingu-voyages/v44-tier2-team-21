@@ -1,10 +1,10 @@
 import { useRef, useEffect } from 'react';
 import PropTypes from 'prop-types';
-import icon1 from "../assets/ghoss.svg";
-
+import icon1 from '../assets/ghoss.svg';
 
 Canvas.propTypes = {
   isAnimating: PropTypes.bool.isRequired,
+  speed: PropTypes.number.isRequired,
 };
 
 function Canvas({ isAnimating, speed }) {
@@ -13,7 +13,7 @@ function Canvas({ isAnimating, speed }) {
 
   useEffect(() => {
     const canvas = canvasRef.current;
-    const context = canvas.getContext("2d");
+    const context = canvas.getContext('2d');
 
     const img = new Image();
     img.src = icon1;
@@ -31,11 +31,11 @@ function Canvas({ isAnimating, speed }) {
 
       // Draw the first square
       context.fillStyle = 'blue';
-      context.drawImage(img,x1, y1, 50, 50);
+      context.drawImage(img, x1, y1, 50, 50);
 
       // Draw the second square
       context.fillStyle = 'red';
-      context.drawImage(img,x2, y2, 50, 50);
+      context.drawImage(img, x2, y2, 50, 50);
 
       // Update the position of the first square
       let dx1 = speed * Math.cos(angle1);
@@ -49,11 +49,16 @@ function Canvas({ isAnimating, speed }) {
       x2 += dx2;
       y2 += dy2;
 
-      if (x1 < x2 + 50 && x1 + 50 > x2 && y1 < y2 + 50 && y1 + 50 > y2) {
+      if (
+        x1 < x2 + 50 &&
+        x1 + 50 > x2 &&
+        y1 < y2 + 50 &&
+        y1 + 50 > y2
+      ) {
         // Handle the collision (Change colors for now)
-        context.fillStyle = "green";
+        context.fillStyle = 'green';
         context.fillRect(x1, y1, 50, 50);
-        context.fillStyle = "yellow";
+        context.fillStyle = 'yellow';
         context.fillRect(x2, y2, 50, 50);
       }
 
@@ -102,14 +107,14 @@ function Canvas({ isAnimating, speed }) {
     return () => {
       cancelAnimationFrame(animationFrameId.current);
     };
-  }, [isAnimating]);
+  }, [isAnimating, speed]);
 
   return (
     <canvas
       ref={canvasRef}
       width={480}
       height={480}
-      className="border-4 rounded-xl border-[#0029ff]"
+      className='border-4 rounded-xl border-[#0029ff]'
     />
   );
 }
