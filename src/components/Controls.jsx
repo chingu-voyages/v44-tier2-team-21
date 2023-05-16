@@ -14,7 +14,6 @@ const Controls = () => {
   const boolRef = useRef(0);
   const directionRef = useRef("");
   const operationRef = useRef("");
-  console.log(mainState.selectedBotsForBattle);
   const handleSubmit = (e) => {
     e.preventDefault;
 
