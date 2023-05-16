@@ -12,6 +12,15 @@ const initialstate = {
       operation: "XOR",
     },
   ],
+  selectedBotsForBattle: [
+    {
+      id: 1,
+      name: "Phil",
+      bool: 0,
+      initDirection: "west",
+      operation: "XOR",
+    },
+  ],
 };
 
 // CONTEXT
@@ -26,6 +35,7 @@ export const BotProvider = ({ children }) => {
       value={{
         botdata: mainState?.botdata,
         setMainState,
+        mainState,
       }}
     >
       {children}
