@@ -13,6 +13,7 @@ const Controls = () => {
   const nameRef = useRef("");
   const boolRef = useRef(0);
   const directionRef = useRef("");
+  const operationRef = useRef("");
 
   const handleSubmit = (e) => {
     e.preventDefault;
@@ -22,6 +23,7 @@ const Controls = () => {
       name: nameRef.current.value,
       bool: boolRef.current.value,
       initDirection: directionRef.current.value,
+      operation: operationRef.current.value,
     };
 
     setMainState({ botdata: [...botdata, formData] });
@@ -114,6 +116,7 @@ const Controls = () => {
                 name="operation"
                 id="operation"
                 className=" bg-transparent"
+                ref={operationRef}
               >
                 <option value="AND">OPERATION</option>
                 <option value="AND">AND</option>
