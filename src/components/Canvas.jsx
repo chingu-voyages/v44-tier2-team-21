@@ -1,5 +1,5 @@
-import { useRef, useEffect } from 'react';
-import PropTypes from 'prop-types';
+import { useRef, useEffect } from "react";
+import PropTypes from "prop-types";
 
 Canvas.propTypes = {
   isAnimating: PropTypes.bool.isRequired,
@@ -44,16 +44,11 @@ function Canvas({ isAnimating }) {
       x2 += dx2;
       y2 += dy2;
 
-      if (
-        x1 < x2 + 50 &&
-        x1 + 50 > x2 &&
-        y1 < y2 + 50 &&
-        y1 + 50 > y2
-      ) {
+      if (x1 < x2 + 50 && x1 + 50 > x2 && y1 < y2 + 50 && y1 + 50 > y2) {
         // Handle the collision (Change colors for now)
-        context.fillStyle = 'green';
+        context.fillStyle = "green";
         context.fillRect(x1, y1, 50, 50);
-        context.fillStyle = 'yellow';
+        context.fillStyle = "yellow";
         context.fillRect(x2, y2, 50, 50);
       }
 
@@ -95,6 +90,15 @@ function Canvas({ isAnimating }) {
       }
     }
 
+    if (isAnimating) {
+      animate();
+    }
+
+    return () => {
+      cancelAnimationFrame(animationFrameId.current);
+    };
+  }, [isAnimating]);
+
   return (
     <canvas
       ref={canvasRef}
@@ -105,4 +109,4 @@ function Canvas({ isAnimating }) {
   );
 }
 
-export default Canvas
+export default Canvas;
