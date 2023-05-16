@@ -11,7 +11,7 @@ function Canvas({ isAnimating }) {
 
   useEffect(() => {
     const canvas = canvasRef.current;
-    const context = canvas.getContext('2d');
+    const context = canvas.getContext("2d");
 
     let x1 = 80;
     let y1 = 180;
@@ -25,11 +25,11 @@ function Canvas({ isAnimating }) {
       context.clearRect(0, 0, canvas.width, canvas.height);
 
       // Draw the first square
-      context.fillStyle = 'blue';
+      context.fillStyle = "blue";
       context.fillRect(x1, y1, 50, 50);
 
       // Draw the second square
-      context.fillStyle = 'red';
+      context.fillStyle = "red";
       context.fillRect(x2, y2, 50, 50);
 
       // Update the position of the first square
@@ -95,23 +95,14 @@ function Canvas({ isAnimating }) {
       }
     }
 
-    if (isAnimating) {
-      animate();
-    }
-
-    return () => {
-      cancelAnimationFrame(animationFrameId.current);
-    };
-  }, [isAnimating]);
-
   return (
     <canvas
       ref={canvasRef}
       width={480}
       height={480}
-      className='border-4 rounded-lg border-[#2803fc]'
+      className="border-4 rounded-xl border-[#0029ff]"
     />
   );
 }
 
-export default Canvas;
+export default Canvas
