@@ -1,6 +1,9 @@
-import { useRef, useEffect } from 'react';
-import PropTypes from 'prop-types';
-import icon1 from '../assets/ghoss.svg';
+import { useRef, useEffect, useContext } from "react";
+import PropTypes from "prop-types";
+import icon1 from "../assets/ghoss.svg";
+import icon2 from "../assets/ghosss.svg";
+import { BotContext } from "../context/botcontext/BotState";
+import Bot from "../factory/Bot";
 
 Canvas.propTypes = {
   isAnimating: PropTypes.bool.isRequired,
@@ -11,31 +14,55 @@ function Canvas({ isAnimating, speed }) {
   const canvasRef = useRef(null);
   let animationFrameId = useRef(null);
 
+  const data = useContext(BotContext);
+  const selectedBotsData = data.mainState.selectedBotsForBattle;
+
+  console.log(selectedBotsData);
+
   useEffect(() => {
     const canvas = canvasRef.current;
-    const context = canvas.getContext('2d');
+    const context = canvas.getContext("2d");
 
-    const img = new Image();
-    img.src = icon1;
-
-    let x1 = 80;
-    let y1 = 180;
-    let x2 = 200;
-    let y2 = 100;
-    // let speed = 3;
+    //default variables
+    let x1 = Math.floor(Math.random() * (canvas.width - 50));
+    let y1 = Math.floor(Math.random() * (canvas.height - 50));
+    let x2 = Math.floor(Math.random() * (canvas.width - 50));
+    let y2 = Math.floor(Math.random() * (canvas.height - 50));
     let angle1 = Math.random() < 0.5 ? 0 : Math.PI / 2;
     let angle2 = Math.random() < 0.5 ? 0 : Math.PI / 2;
+
+    //create first bot
+    const img1 = new Image();
+    img1.src = icon1;
+    const bot1 = new Bot(
+      x1,
+      y1,
+      selectedBotsData[0]?.name,
+      selectedBotsData[0]?.bool,
+      selectedBotsData[0]?.operation,
+      selectedBotsData[0]?.initDirection
+    );
+
+    //create 2nd bot
+    const img2 = new Image();
+    img2.src = icon2;
+    const bot2 = new Bot(
+      x2,
+      y2,
+      selectedBotsData[1]?.name,
+      selectedBotsData[1]?.bool,
+      selectedBotsData[1]?.operation,
+      selectedBotsData[1]?.initDirection
+    );
 
     function animate() {
       context.clearRect(0, 0, canvas.width, canvas.height);
 
-      // Draw the first square
-      context.fillStyle = 'blue';
-      context.drawImage(img, x1, y1, 50, 50);
+      // Draw the first bot
+      bot1.draw(context, x1, y1, img1);
 
-      // Draw the second square
-      context.fillStyle = 'red';
-      context.drawImage(img, x2, y2, 50, 50);
+      // Draw the second bot
+      bot2.draw(context, x2, y2, img2);
 
       // Update the position of the first square
       let dx1 = speed * Math.cos(angle1);
@@ -49,16 +76,11 @@ function Canvas({ isAnimating, speed }) {
       x2 += dx2;
       y2 += dy2;
 
-      if (
-        x1 < x2 + 50 &&
-        x1 + 50 > x2 &&
-        y1 < y2 + 50 &&
-        y1 + 50 > y2
-      ) {
+      if (x1 < x2 + 50 && x1 + 50 > x2 && y1 < y2 + 50 && y1 + 50 > y2) {
         // Handle the collision (Change colors for now)
-        context.fillStyle = 'green';
+        context.fillStyle = "green";
         context.fillRect(x1, y1, 50, 50);
-        context.fillStyle = 'yellow';
+        context.fillStyle = "yellow";
         context.fillRect(x2, y2, 50, 50);
       }
 
@@ -114,7 +136,7 @@ function Canvas({ isAnimating, speed }) {
       ref={canvasRef}
       width={480}
       height={480}
-      className='border-4 rounded-xl border-[#0029ff]'
+      className="border-4 rounded-xl border-[#0029ff]"
     />
   );
 }

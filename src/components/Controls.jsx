@@ -8,13 +8,12 @@ import { BotContext } from "../context/botcontext/BotState";
 
 const Controls = () => {
   const [show, setShow] = useState(false);
-  const { botdata, setMainState } = useContext(BotContext);
+  const { botdata, setMainState, mainState } = useContext(BotContext);
 
   const nameRef = useRef("");
   const boolRef = useRef(0);
   const directionRef = useRef("");
   const operationRef = useRef("");
-
   const handleSubmit = (e) => {
     e.preventDefault;
 
@@ -26,10 +25,13 @@ const Controls = () => {
       operation: operationRef.current.value,
     };
 
-    setMainState({ botdata: [...botdata, formData] });
+    setMainState({ ...mainState, botdata: [...botdata, formData] });
     setShow(!show);
-    console.log(formData);
   };
+
+  let selectedBots = mainState.selectedBotsForBattle
+    ? mainState.selectedBotsForBattle
+    : [];
 
   return (
     <div className="w-full h-full bg-[#1E1E1E] text-[#FFFFFF] text-center border-4 rounded-md border-[#FF0000] max-w-sm px-5">
@@ -39,6 +41,12 @@ const Controls = () => {
           <div
             className="bot-added border rounded-xl flex flex-row space-x-10 mb-3 p-2 items-center"
             key={bot.id}
+            onClick={() =>
+              setMainState({
+                ...mainState,
+                selectedBotsForBattle: [...selectedBots, { ...bot }],
+              })
+            }
           >
             <img src={icon1} alt="" className="w-10" />
             <p>{bot.name}</p>
@@ -46,6 +54,7 @@ const Controls = () => {
           </div>
         );
       })}
+
       {!show && (
         <button
           onClick={() => setShow(!show)}
