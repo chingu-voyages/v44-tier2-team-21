@@ -1,5 +1,6 @@
 import { useRef, useEffect } from 'react';
 import PropTypes from 'prop-types';
+import icon1 from "../assets/ghoss.svg";
 
 Canvas.propTypes = {
   isAnimating: PropTypes.bool.isRequired,
@@ -12,6 +13,9 @@ function Canvas({ isAnimating }) {
   useEffect(() => {
     const canvas = canvasRef.current;
     const context = canvas.getContext('2d');
+
+    const img = new Image();
+    img.src = icon1;
 
     let x1 = 80;
     let y1 = 180;
@@ -26,11 +30,11 @@ function Canvas({ isAnimating }) {
 
       // Draw the first square
       context.fillStyle = 'blue';
-      context.fillRect(x1, y1, 50, 50);
+      context.drawImage(img,x1, y1, 50, 50);
 
       // Draw the second square
       context.fillStyle = 'red';
-      context.fillRect(x2, y2, 50, 50);
+      context.drawImage(img,x2, y2, 50, 50);
 
       // Update the position of the first square
       let dx1 = speed * Math.cos(angle1);
