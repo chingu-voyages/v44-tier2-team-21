@@ -106,6 +106,22 @@ const Controls = () => {
                 <option defaultValue="west">WEST</option>
               </select>
             </div>
+            <div className="operation form-group">
+              <label htmlFor="operation" className="hidden">
+                OPERATION
+              </label>
+              <select
+                name="operation"
+                id="operation"
+                className=" bg-transparent"
+              >
+                <option value="AND">OPERATION</option>
+                <option value="AND">AND</option>
+                <option value="XOR">XOR</option>
+                <option value="OR">OR</option>
+                <option value="NOT">NOT</option>
+              </select>
+            </div>
             <button className="border rounded-xl px-4 py-1" type="submit">
               SAVE
             </button>
