@@ -6,6 +6,7 @@ import { BotContext } from "../context/botcontext/BotState";
 import Bot from "../factory/Bot";
 import {AND,OR,XOR,NOR} from '../helper/BoolFunctions'
 
+
 Canvas.propTypes = {
   isAnimating: PropTypes.bool.isRequired,
   speed: PropTypes.number.isRequired,
@@ -22,7 +23,7 @@ function Canvas({ isAnimating, speed }) {
 
   useEffect(() => {
     const canvas = canvasRef.current;
-    const context = canvas.getContext("2d");
+    const context = canvas.getContext('2d');
 
     //default variables
     let x1 = Math.floor(Math.random() * (canvas.width - 50));
@@ -65,23 +66,44 @@ function Canvas({ isAnimating, speed }) {
       // Draw the second bot
       bot2.draw(context, x2, y2, img2);
 
-      // Update the position of the first square
+      // Update the position of the first bot
       let dx1 = speed * Math.cos(angle1);
       let dy1 = speed * Math.sin(angle1);
       x1 += dx1;
       y1 += dy1;
 
-      // Update the position of the second square
+      // X Axis Only
+      // x1 += dx1;
+      // x1 -= dx1;
+
+      // Y Axis Only
+      // y1 += dy1;
+      // y1 -= dy1;
+
+      // Update the position of the second bot
       let dx2 = speed * Math.cos(angle2);
       let dy2 = speed * Math.sin(angle2);
       x2 += dx2;
       y2 += dy2;
 
-      if (x1 < x2 + 50 && x1 + 50 > x2 && y1 < y2 + 50 && y1 + 50 > y2) {
+      // X Axis Only
+      // x2 += dx2;
+      // x2 -= dx2;
+
+      // Y Axis Only
+      // y2 += dy2;
+      // y2 -= dy2;
+
+      if (
+        x1 < x2 + 50 &&
+        x1 + 50 > x2 &&
+        y1 < y2 + 50 &&
+        y1 + 50 > y2
+      ) {
         // Handle the collision (Change colors for now)
-        context.fillStyle = "green";
+        context.fillStyle = 'green';
         context.fillRect(x1, y1, 50, 50);
-        context.fillStyle = "yellow";
+        context.fillStyle = 'yellow';
         context.fillRect(x2, y2, 50, 50);
 
 
@@ -150,14 +172,14 @@ function Canvas({ isAnimating, speed }) {
     return () => {
       cancelAnimationFrame(animationFrameId.current);
     };
-  }, [isAnimating, speed]);
+  }, [isAnimating, speed, selectedBotsData]);
 
   return (
     <canvas
       ref={canvasRef}
       width={480}
       height={480}
-      className="border-4 rounded-xl border-[#0029ff]"
+      className='border-4 rounded-xl border-[#0029ff]'
     />
   );
 }
