@@ -1,11 +1,10 @@
-import { useRef, useEffect, useContext } from "react";
-import PropTypes from "prop-types";
-import icon1 from "../assets/ghoss.svg";
-import icon2 from "../assets/ghosss.svg";
-import { BotContext } from "../context/botcontext/BotState";
-import Bot from "../factory/Bot";
-import {AND,OR,XOR,NOR} from '../helper/BoolFunctions'
-
+import { useRef, useEffect, useContext } from 'react';
+import PropTypes from 'prop-types';
+import icon1 from '../assets/ghoss.svg';
+import icon2 from '../assets/ghosss.svg';
+import { BotContext } from '../context/botcontext/BotState';
+import Bot from '../factory/Bot';
+import { AND, OR, XOR, NOR } from '../helper/BoolFunctions';
 
 Canvas.propTypes = {
   isAnimating: PropTypes.bool.isRequired,
@@ -32,6 +31,23 @@ function Canvas({ isAnimating, speed }) {
     let y2 = Math.floor(Math.random() * (canvas.height - 50));
     let angle1 = Math.random() < 0.5 ? 0 : Math.PI / 2;
     let angle2 = Math.random() < 0.5 ? 0 : Math.PI / 2;
+
+    // Bot 1 North
+    // let angle1 = Math.PI / 2;
+    // Bot 2 North
+    // let angle2 = Math.PI / 2;
+    // Bot 1 South
+    // let angle1 = (3 * Math.PI) / 2;
+    // Bot 2 South
+    // let angle2 = (3 * Math.PI) / 2;
+    // Bot 1 West
+    // let angle1 = Math.PI;
+    // Bot 2 West
+    // let angle2 = Math.PI;
+    // Bot 1 East
+    // let angle1 = 0;
+    // Bot 2 East
+    // let angle2 = 0;
 
     //create first bot
     const img1 = new Image();
@@ -72,14 +88,6 @@ function Canvas({ isAnimating, speed }) {
       x1 += dx1;
       y1 += dy1;
 
-      // X Axis Only
-      // x1 += dx1;
-      // x1 -= dx1;
-
-      // Y Axis Only
-      // y1 += dy1;
-      // y1 -= dy1;
-
       // Update the position of the second bot
       let dx2 = speed * Math.cos(angle2);
       let dy2 = speed * Math.sin(angle2);
@@ -106,20 +114,19 @@ function Canvas({ isAnimating, speed }) {
         context.fillStyle = 'yellow';
         context.fillRect(x2, y2, 50, 50);
 
-
-      // SWITCH CASE TAKES OPERATIN FROM STATE OBJECT
-      switch ('AND') {
+        // SWITCH CASE TAKES OPERATIN FROM STATE OBJECT
+        switch ('AND') {
           case 'AND':
-            AND(1,0)
+            AND(1, 0);
             break;
           case 'OR':
-            OR(1,0)
+            OR(1, 0);
             break;
           case 'XOR':
-            XOR(1,0)
+            XOR(1, 0);
             break;
           case 'NOR':
-            NOR(1,0)
+            NOR(1, 0);
             break;
 
           default:
