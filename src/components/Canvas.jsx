@@ -1,10 +1,10 @@
-import { useRef, useEffect, useContext } from 'react';
-import PropTypes from 'prop-types';
-import icon1 from '../assets/ghoss.svg';
-import icon2 from '../assets/ghosss.svg';
-import { BotContext } from '../context/botcontext/BotState';
-import Bot from '../factory/Bot';
-import { AND, OR, XOR, NOR } from '../helper/BoolFunctions';
+import { useRef, useEffect, useContext } from "react";
+import PropTypes from "prop-types";
+import icon1 from "../assets/ghoss.svg";
+import icon2 from "../assets/ghosss.svg";
+import { BotContext } from "../context/botcontext/BotState";
+import Bot from "../factory/Bot";
+import { AND, OR, XOR, NOR } from "../helper/BoolFunctions";
 
 Canvas.propTypes = {
   isAnimating: PropTypes.bool.isRequired,
@@ -16,13 +16,15 @@ function Canvas({ isAnimating, speed }) {
   let animationFrameId = useRef(null);
 
   const data = useContext(BotContext);
-  const selectedBotsData = data.mainState.selectedBotsForBattle;
-
-  console.log(selectedBotsData);
+  const selectedBotsData = data.botdata.filter((bot) => {
+    if (bot.selected === true) {
+      return bot;
+    }
+  });
 
   useEffect(() => {
     const canvas = canvasRef.current;
-    const context = canvas.getContext('2d');
+    const context = canvas.getContext("2d");
 
     //default variables
     let x1 = Math.floor(Math.random() * (canvas.width - 50));
@@ -102,30 +104,25 @@ function Canvas({ isAnimating, speed }) {
       // y2 += dy2;
       // y2 -= dy2;
 
-      if (
-        x1 < x2 + 50 &&
-        x1 + 50 > x2 &&
-        y1 < y2 + 50 &&
-        y1 + 50 > y2
-      ) {
+      if (x1 < x2 + 50 && x1 + 50 > x2 && y1 < y2 + 50 && y1 + 50 > y2) {
         // Handle the collision (Change colors for now)
-        context.fillStyle = 'green';
+        context.fillStyle = "green";
         context.fillRect(x1, y1, 50, 50);
-        context.fillStyle = 'yellow';
+        context.fillStyle = "yellow";
         context.fillRect(x2, y2, 50, 50);
 
         // SWITCH CASE TAKES OPERATIN FROM STATE OBJECT
-        switch ('AND') {
-          case 'AND':
+        switch ("AND") {
+          case "AND":
             AND(1, 0);
             break;
-          case 'OR':
+          case "OR":
             OR(1, 0);
             break;
-          case 'XOR':
+          case "XOR":
             XOR(1, 0);
             break;
-          case 'NOR':
+          case "NOR":
             NOR(1, 0);
             break;
 
@@ -186,7 +183,7 @@ function Canvas({ isAnimating, speed }) {
       ref={canvasRef}
       width={480}
       height={480}
-      className='border-4 rounded-xl border-[#0029ff]'
+      className="border-4 rounded-xl border-[#0029ff]"
     />
   );
 }

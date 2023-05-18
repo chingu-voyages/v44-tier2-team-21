@@ -1,7 +1,6 @@
 import { useContext, useState, useRef, useEffect } from "react";
-import icon1 from "../assets/ghoss.svg";
 import icon2 from "../assets/ghosss.svg";
-import menu from "../assets/menu.svg";
+import AddedBots from "./AddedBots";
 
 // BOT CONTEXT IMPORTED
 import { BotContext } from "../context/botcontext/BotState";
@@ -9,11 +8,11 @@ import { BotContext } from "../context/botcontext/BotState";
 const Controls = () => {
   const [show, setShow] = useState(false);
   const { botdata, setMainState, mainState } = useContext(BotContext);
-
   const nameRef = useRef("");
   const boolRef = useRef(0);
   const directionRef = useRef("");
   const operationRef = useRef("");
+
   const handleSubmit = (e) => {
     e.preventDefault;
 
@@ -23,36 +22,18 @@ const Controls = () => {
       bool: boolRef.current.value,
       initDirection: directionRef.current.value,
       operation: operationRef.current.value,
+      selected: false,
     };
 
     setMainState({ ...mainState, botdata: [...botdata, formData] });
     setShow(!show);
   };
 
-  let selectedBots = mainState.selectedBotsForBattle
-    ? mainState.selectedBotsForBattle
-    : [];
-
   return (
     <div className="w-full h-full bg-[#1E1E1E] text-[#FFFFFF] text-center border-4 rounded-md border-[#FF0000] max-w-sm px-5">
       <h2 className="mb-7 text-2xl mt-5">GAME CONFIGURATION</h2>
       {botdata.map((bot) => {
-        return (
-          <div
-            className="bot-added border rounded-xl flex flex-row space-x-10 mb-3 p-2 items-center"
-            key={bot.id}
-            onClick={() =>
-              setMainState({
-                ...mainState,
-                selectedBotsForBattle: [...selectedBots, { ...bot }],
-              })
-            }
-          >
-            <img src={icon1} alt="" className="w-10" />
-            <p>{bot.name}</p>
-            <img src={menu} alt="" className="w-8" />
-          </div>
-        );
+        return <AddedBots bot={bot} key={bot.id} />;
       })}
 
       {!show && (
