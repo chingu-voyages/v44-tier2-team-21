@@ -72,8 +72,8 @@ function Canvas({ isAnimating, speed }) {
     }
 
 // REPLACED THE VARIABLES WITH THE FUNCTION.
-let angle1 = getAngleFromDirection('EAST');
-let angle2 = getAngleFromDirection('EAST');
+let angle1 = getAngleFromDirection(selectedBotsData[0]?.initDirection);
+let angle2 = getAngleFromDirection(selectedBotsData[1]?.initDirection);
 
 
     //create first bot
