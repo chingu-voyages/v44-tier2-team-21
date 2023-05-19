@@ -31,8 +31,8 @@ function Canvas({ isAnimating, speed }) {
     let y1 = Math.floor(Math.random() * (canvas.height - 50));
     let x2 = Math.floor(Math.random() * (canvas.width - 50));
     let y2 = Math.floor(Math.random() * (canvas.height - 50));
-    let angle1 = Math.random() < 0.5 ? 0 : Math.PI / 2;
-    let angle2 = Math.random() < 0.5 ? 0 : Math.PI / 2;
+    // let angle1 = Math.random() < 0.5 ? 0 : Math.PI / 2;
+    // let angle2 = Math.random() < 0.5 ? 0 : Math.PI / 2;
 
     // Bot 1 North
     // let angle1 = Math.PI / 2;
@@ -50,6 +50,31 @@ function Canvas({ isAnimating, speed }) {
     // let angle1 = 0;
     // Bot 2 East
     // let angle2 = 0;
+
+// SWITCH CASE FUNCTION TAKES IN DIRECTION FROM STATE
+    function getAngleFromDirection(direction) {
+      switch (direction) {
+        // 90 DEGREE ANGLE IN RADIANS
+        case "SOUTH":
+          return Math.PI / 2;
+        // 0 DEGREE ANGLE IN RADIANS
+        case "EAST":
+          return 0;
+        // 270 DEGREE ANGLE
+        case "NORTH":
+          return (3 * Math.PI) / 2;
+        // 180 DEGREE ANGLE
+        case "WEST":
+          return Math.PI;
+        default:
+          return 0;
+      }
+    }
+
+// REPLACED THE VARIABLES WITH THE FUNCTION.
+let angle1 = getAngleFromDirection('EAST');
+let angle2 = getAngleFromDirection('EAST');
+
 
     //create first bot
     const img1 = new Image();
