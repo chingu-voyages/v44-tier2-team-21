@@ -10,6 +10,7 @@ const initialstate = {
       initDirection: "NORTH",
       name: "gary",
       operation: "XOR",
+      color: "hotpink",
       selected: false,
     },
   ],

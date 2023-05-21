@@ -3,7 +3,7 @@ import icon1 from "../assets/ghoss.svg";
 
 import menu from "../assets/menu.svg";
 import { BotContext } from "../context/botcontext/BotState";
-import BotReducer from "../context/botcontext/BotReducer";
+import { contructRandomSvg } from "../helper/canvasCollision";
 
 const AddedBots = ({ bot }) => {
   const { botdata, setMainState } = useContext(BotContext);
@@ -21,11 +21,10 @@ const AddedBots = ({ bot }) => {
           }
           return elem;
         });
-        console.log(newBotData);
         setMainState({ botdata: newBotData });
       }}
     >
-      <img src={icon1} alt="" className="w-10" />
+      <img src={contructRandomSvg(bot.color)} alt="" className="w-10" />
       <p>{bot.name}</p>
       <img src={menu} alt="" className="w-8" />
     </div>
