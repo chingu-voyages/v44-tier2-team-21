@@ -4,12 +4,14 @@ import AddedBots from "./AddedBots";
 
 // BOT CONTEXT IMPORTED
 import { BotContext } from "../context/botcontext/BotState";
+import { contructRandomSvg } from "../helper/canvasCollision";
 
 const Controls = () => {
   const [show, setShow] = useState(false);
   const { botdata, setMainState, mainState } = useContext(BotContext);
   const nameRef = useRef("");
   const boolRef = useRef(0);
+  const colorRef = useRef("");
   const directionRef = useRef("");
   const operationRef = useRef("");
 
@@ -20,6 +22,7 @@ const Controls = () => {
       id: botdata.length + 1,
       name: nameRef.current.value,
       bool: boolRef.current.value,
+      color: colorRef.current.value,
       initDirection: directionRef.current.value,
       operation: operationRef.current.value,
       selected: false,
@@ -51,7 +54,11 @@ const Controls = () => {
             onSubmit={handleSubmit}
           >
             <div className="icon-and-name  flex flex-row">
-              <img src={icon2} alt="" className="w-10 mx-2" />
+              <img
+                src={contructRandomSvg(colorRef.current.value)}
+                alt=""
+                className="w-10 mx-2"
+              />
               <label htmlFor="name" className="hidden">
                 name
               </label>
@@ -60,6 +67,18 @@ const Controls = () => {
                 placeholder="NAME"
                 className="w-3/5 p-2 border border-white rounded-xl bg-transparent"
                 ref={nameRef}
+              />
+              <label htmlFor="init-direction" className="hidden">
+                COLOR
+              </label>
+              <label htmlFor="color" className="hidden">
+                Color
+              </label>
+              <input
+                type="text"
+                placeholder="COLOR"
+                className="w-3/5 p-2 border border-white rounded-xl bg-transparent"
+                ref={colorRef}
               />
             </div>
             <div className="bool form-group m-3">
