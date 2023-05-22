@@ -1,32 +1,32 @@
 export const AND = (b1, b2) => {
-  if (b1 & b2 === 1) {
-    console.log('WIN');
+  if (b1 && b2 === 1) {
+    return 1;
   } else {
-    console.log('TIE');
+    return 0;
   }
 };
 
 export const OR = (b1, b2) => {
   if (b1 || b2 === 1) {
-    console.log('WIN');
+    return 1;
   } else {
-    console.log('TIE');
+    return 0;
   }
 };
 
 export const XOR = (b1, b2) => {
   if (b1 === b2) {
-    console.log('TIE');
+    return 0;
   } else {
-    console.log('WIN');
+    return 1;
   }
 };
 
 export const NOR = (b1, b2) => {
   if (b1 || b2 === 0) {
-    console.log('WIN');
+    return 1;
   } else {
-    console.log('TIE');
+    return 0;
   }
 };
 

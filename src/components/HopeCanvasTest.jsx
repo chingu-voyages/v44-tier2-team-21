@@ -6,6 +6,7 @@ import {
   botCollision,
   constructBotsArray,
   getUniqueArray,
+  returnBoolAfterOperation,
   setWallCollisions,
 } from "../helper/BotFunctions";
 
@@ -70,7 +71,53 @@ function Canvas({ isAnimating, speed }) {
       if (areBotsColliding) {
         // *If the bots are colliding then remove the duplicates from combiniation of X and Y.
         collidingBots = getUniqueArray(isCollidingArrX, isCollidingArrY);
-        console.table(collidingBots);
+        //code that will pause the first 2 bots
+
+        //setting bot1
+        let bot1 = collidingBots[0];
+        let bot2 = collidingBots[1];
+
+        //calculate the bool value of each bot after applying operation
+        const bot1BoolResultOperation = returnBoolAfterOperation(
+          bot1.operation,
+          bot1.bool,
+          bot2.bool
+        );
+
+        const bot2BoolResultOperation = returnBoolAfterOperation(
+          bot2.operation,
+          bot2.bool,
+          bot1.bool
+        );
+
+        console.log(bot1BoolResultOperation, bot2BoolResultOperation);
+
+        // * Check winning bot
+        if (bot1BoolResultOperation === bot2BoolResultOperation) {
+          console.log("TIE", bot1BoolResultOperation, bot2BoolResultOperation);
+        } else if (
+          bot1BoolResultOperation === 1 &&
+          bot2BoolResultOperation === 0
+        ) {
+          console.log(
+            `${bot1.name} wins`,
+            `${bot2.name} loses`,
+            `${bot1.operation} ${bot1.bool}`,
+            `${bot2.operation} ${bot2.bool}`
+          );
+        } else if (
+          bot2BoolResultOperation === 1 &&
+          bot1BoolResultOperation === 0
+        ) {
+          console.log(
+            `${bot2.name} wins!`,
+            `${bot1.name} loses`,
+            `${bot2.operation} ${bot2.bool}`,
+            `${bot1.operation} ${bot1.bool}`
+          );
+        } else {
+          console.log("there's something wrong with your code");
+        }
       }
 
       if (isAnimating) {

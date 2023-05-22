@@ -5,12 +5,21 @@ import BotReducer from "./BotReducer";
 const initialstate = {
   botdata: [
     {
-      bool: "0",
+      bool: 1,
       id: 1,
       initDirection: "NORTH",
       name: "gary",
-      operation: "XOR",
+      operation: "AND",
       color: "hotpink",
+      selected: false,
+    },
+    {
+      bool: 0,
+      id: 2,
+      initDirection: "EAST",
+      name: "cecil",
+      operation: "XOR",
+      color: "red",
       selected: false,
     },
   ],
