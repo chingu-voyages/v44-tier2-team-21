@@ -20,10 +20,10 @@ const Controls = () => {
 
     const formData = {
       id: botdata.length + 1,
-      name: nameRef.current.value,
-      bool: boolRef.current.value,
-      color: colorRef.current.value,
-      initDirection: directionRef.current.value,
+      name: nameRef?.current.value,
+      bool: boolRef?.current.value,
+      color: colorRef?.current?.value || "hotpink",
+      initDirection: directionRef?.current?.value,
       operation: operationRef.current.value,
       selected: false,
     };
@@ -55,7 +55,7 @@ const Controls = () => {
           >
             <div className="icon-and-name  flex flex-row">
               <img
-                src={contructRandomSvg(colorRef.current.value)}
+                src={contructRandomSvg(colorRef?.current?.value || "hotpink")}
                 alt=""
                 className="w-10 mx-2"
               />
