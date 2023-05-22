@@ -7,7 +7,7 @@ import {
   constructBotsArray,
   getUniqueArray,
   setWallCollisions,
-} from "../helper/canvasCollision";
+} from "../helper/BotFunctions";
 
 Canvas.propTypes = {
   isAnimating: PropTypes.bool.isRequired,

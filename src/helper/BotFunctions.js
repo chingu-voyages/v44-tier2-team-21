@@ -71,13 +71,35 @@ export const getUniqueArray = (arr1, arr2) => {
 };
 
 /**
+ * * Function to set initial direction
+ */
+export function getAngleFromDirection(direction) {
+  switch (direction) {
+    // 90 DEGREE ANGLE IN RADIANS
+    case "SOUTH":
+      return Math.PI / 2;
+    // 0 DEGREE ANGLE IN RADIANS
+    case "EAST":
+      return 0;
+    // 270 DEGREE ANGLE
+    case "NORTH":
+      return (3 * Math.PI) / 2;
+    // 180 DEGREE ANGLE
+    case "WEST":
+      return Math.PI;
+    default:
+      return 0;
+  }
+}
+
+/**
  * * Function to create a bot array with our Bot constructor class
  */
 export const constructBotsArray = (selectedBotsData, canvas) => {
   return selectedBotsData.map((bot) => {
     const defaultXValue = Math.floor(Math.random() * (canvas.width - 50));
     const defaultYValue = Math.floor(Math.random() * (canvas.height - 50));
-    const defaultAngle = Math.random() < 0.5 ? 0 : Math.PI / 2;
+    const defaultAngle = getAngleFromDirection(bot?.initDirection);
     const svg = contructRandomSvg(bot.color);
     return new Bot(
       bot.id,
