@@ -1,4 +1,5 @@
 import Bot from "../factory/Bot";
+import { AND, OR, XOR, NOR } from "../helper/BoolFunctions";
 
 export const setWallCollisions = ({ bot, canvas }) => {
   //wall collisions
@@ -114,6 +115,29 @@ export const constructBotsArray = (selectedBotsData, canvas) => {
     );
   });
 };
+
+/**
+ * * Calculating Boolean After Operation
+ */
+
+export const returnBoolAfterOperation = (operation, bool1, bool2) => {
+  switch (operation) {
+    case "AND":
+      return AND(bool1, bool2);
+    case "OR":
+      return OR(bool1, bool2);
+    case "XOR":
+      return XOR(bool1, bool2);
+    case "NOR":
+      return NOR(bool1, bool2);
+    default:
+      break;
+  }
+};
+
+/**
+ * * Function to set bot colors using texts
+ */
 
 export const contructRandomSvg = (newColor) => {
   const color = newColor ? newColor : "hotpink";

@@ -3,7 +3,7 @@ import icon1 from "../assets/ghoss.svg";
 
 import menu from "../assets/menu.svg";
 import { BotContext } from "../context/botcontext/BotState";
-import { contructRandomSvg } from "../helper/canvasCollision";
+import { contructRandomSvg } from "../helper/BotFunctions";
 
 const AddedBots = ({ bot }) => {
   const { botdata, setMainState } = useContext(BotContext);

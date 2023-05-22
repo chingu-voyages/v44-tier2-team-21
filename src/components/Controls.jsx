@@ -4,7 +4,7 @@ import AddedBots from "./AddedBots";
 
 // BOT CONTEXT IMPORTED
 import { BotContext } from "../context/botcontext/BotState";
-import { contructRandomSvg } from "../helper/canvasCollision";
+import { contructRandomSvg } from "../helper/BotFunctions";
 
 const Controls = () => {
   const [show, setShow] = useState(false);
@@ -21,7 +21,7 @@ const Controls = () => {
     const formData = {
       id: botdata.length + 1,
       name: nameRef?.current.value,
-      bool: boolRef?.current.value,
+      bool: parseInt(boolRef?.current.value),
       color: colorRef?.current?.value || "hotpink",
       initDirection: directionRef?.current?.value,
       operation: operationRef.current.value,
@@ -127,11 +127,11 @@ const Controls = () => {
                 className=" bg-transparent"
                 ref={operationRef}
               >
-                <option value="AND">OPERATION</option>
+                <option>OPERATION</option>
                 <option value="AND">AND</option>
                 <option value="XOR">XOR</option>
                 <option value="OR">OR</option>
-                <option value="NOT">NOT</option>
+                <option value="NOR">NOR</option>
               </select>
             </div>
             <button className="border rounded-xl px-4 py-1" type="submit">
