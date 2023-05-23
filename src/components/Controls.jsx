@@ -16,7 +16,7 @@ const Controls = () => {
   const operationRef = useRef("");
 
   const handleSubmit = (e) => {
-    e.preventDefault;
+    e.preventDefault();
 
     const formData = {
       id: botdata.length + 1,
@@ -54,15 +54,16 @@ const Controls = () => {
             onSubmit={handleSubmit}
           >
             <div className="icon-and-name  flex flex-row">
-              <img
+              {/* <img
                 src={contructRandomSvg(colorRef?.current?.value || "hotpink")}
                 alt=""
                 className="w-10 mx-2"
-              />
+              /> */}
               <label htmlFor="name" className="hidden">
                 name
               </label>
               <input
+                required
                 type="text"
                 placeholder="NAME"
                 className="w-3/5 p-2 border border-white rounded-xl bg-transparent"
@@ -90,8 +91,9 @@ const Controls = () => {
                 id="bool"
                 className="bool bg-transparent"
                 ref={boolRef}
+                required
               >
-                <option defaultValue="0" disabled selected>
+                <option value="" disabled selected>
                   BOOLEAN VALUE
                 </option>
                 <option defaultValue="0">0</option>
@@ -107,8 +109,9 @@ const Controls = () => {
                 id="init-direction"
                 className="bg-transparent"
                 ref={directionRef}
+                required
               >
-                <option disabled selected>
+                <option value="" disabled selected>
                   INITIAL DIRECTION
                 </option>
                 <option defaultValue="north">NORTH</option>
@@ -126,12 +129,15 @@ const Controls = () => {
                 id="operation"
                 className=" bg-transparent"
                 ref={operationRef}
+                required
               >
-                <option>OPERATION</option>
-                <option value="AND">AND</option>
-                <option value="XOR">XOR</option>
-                <option value="OR">OR</option>
-                <option value="NOR">NOR</option>
+                <option selected disabled value="">
+                  OPERATION
+                </option>
+                <option defaultValue="AND">AND</option>
+                <option defaultValue="XOR">XOR</option>
+                <option defaultValue="OR">OR</option>
+                <option defaultValue="NOR">NOR</option>
               </select>
             </div>
             <button className="border rounded-xl px-4 py-1" type="submit">
