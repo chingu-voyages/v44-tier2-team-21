@@ -1,4 +1,4 @@
-import { useRef, useEffect, useContext } from "react";
+import { useRef, useEffect, useContext} from "react";
 import PropTypes from "prop-types";
 import { BotContext } from "../context/botcontext/BotState";
 import { AND, OR, XOR, NOR } from "../helper/BoolFunctions";
@@ -101,7 +101,8 @@ function Canvas({ isAnimating, speed }) {
           bot1BoolResultOperation === 1 &&
           bot2BoolResultOperation === 0
         ) {
-          bot2.setXValue(bot2.getXValue + 0);
+          // bot1 wins, remove bot2 from botsArray
+          botsArray.splice(botsArray.indexOf(bot2), 1);
 
           console.log(
             `${bot1.name} wins`,
@@ -113,7 +114,8 @@ function Canvas({ isAnimating, speed }) {
           bot2BoolResultOperation === 1 &&
           bot1BoolResultOperation === 0
         ) {
-          bot1.setXValue(bot1.getXValue + 0);
+          // bot2 wins, remove bot1 from botsArray
+          botsArray.splice(botsArray.indexOf(bot1), 1);
 
           console.log(
             `${bot2.name} wins!`,
@@ -125,6 +127,10 @@ function Canvas({ isAnimating, speed }) {
           console.log("there's something wrong with your code");
         }
       }
+
+
+      
+
 
       if (isAnimating) {
         animationFrameId.current = requestAnimationFrame(animate);
