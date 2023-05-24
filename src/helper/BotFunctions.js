@@ -22,22 +22,25 @@ export const setWallCollisions = ({ bot, canvas }) => {
 
 /**
  * * we are passing positionArr which can be values of x position or y positions
- * * positionArr = [100, 150, 30, 70];
  */
-export const botCollision = (positionArr, botArr) => {
+
+export const botCollision = (botArr) => {
   const collidingArray = [];
-  const BOT_SIZE = 50;
+  const BOT_SIZE = 45;
   // * We are looping over each value in the array of positions to check for the same instance of an x or y coordinate
   // * We are comparing if the difference is less than or equal to 50 which is the height and width of the bot
-  for (let i = 0; i < positionArr.length; i++) {
-    for (let j = 0; j < positionArr.length; j++) {
+  for (let i = 0; i < botArr.length; i++) {
+    for (let j = 0; j < botArr.length; j++) {
       if (i === j) {
         // *If the index are same don't do anything and continue to rest of the loop this is because we are comparing the first value of the array with itself
         continue;
       } else {
-        // * If the difference is less than 50 that means collision happened
+        // * If the difference is less than BOT_SIZE that means collision happened
         // * Put the bots which collided in new array and increment i as that values is already checked
-        if (Math.abs(positionArr[i] - positionArr[j]) <= BOT_SIZE) {
+        if (
+          Math.abs(botArr[i]?.x - botArr[j]?.x) < BOT_SIZE &&
+          Math.abs(botArr[i]?.y - botArr[j]?.y) < BOT_SIZE
+        ) {
           // * Setting arr.length to 0 empty the array
           // * Remove already existing bots which were colliding,
           collidingArray.length = 0;
@@ -53,7 +56,6 @@ export const botCollision = (positionArr, botArr) => {
   // * Return the colliding array
   return collidingArray;
 };
-
 /**
  * * Function to return Unique Array
  */

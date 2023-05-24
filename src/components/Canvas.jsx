@@ -61,23 +61,25 @@ function Canvas({ isAnimating, speed }) {
       });
 
       // *Check if any of the array of X and array of Y collides.
-      const isCollidingArrX = botCollision(xPositionForBots, botsArray);
-      const isCollidingArrY = botCollision(yPositionsForBots, botsArray);
-      const areBotsColliding = isCollidingArrX.length && isCollidingArrY.length;
+      const collidingBotsArr = botCollision(botsArray);
+      const areBotsColliding = collidingBotsArr.length;
 
       // !This array will have all the bots that are colliding.
-      let collidingBots = [];
 
+      console.log(collidingBotsArr);
       if (areBotsColliding) {
         // *If the bots are colliding then remove the duplicates from combiniation of X and Y.
-        collidingBots = getUniqueArray(isCollidingArrX, isCollidingArrY);
-        //code that will pause the first 2 bots
+        // collidingBots = getUniqueArray(isCollidingArrX, isCollidingArrY);
+        let dx = 0;
+        let dy = 0;
 
-        //setting bot1
-        let bot1 = collidingBots[0];
-        let bot2 = collidingBots[1];
+        // * setting bot1
+        let bot1 = collidingBotsArr[0];
+        let bot2 = collidingBotsArr[1];
 
-        //calculate the bool value of each bot after applying operation
+        // * code that will pause the colliding bots
+
+        // * calculate the bool value of each bot after applying operation
         const bot1BoolResultOperation = returnBoolAfterOperation(
           bot1.operation,
           bot1.bool,
@@ -99,6 +101,8 @@ function Canvas({ isAnimating, speed }) {
           bot1BoolResultOperation === 1 &&
           bot2BoolResultOperation === 0
         ) {
+          bot2.setXValue(bot2.getXValue + 0);
+
           console.log(
             `${bot1.name} wins`,
             `${bot2.name} loses`,
@@ -109,6 +113,8 @@ function Canvas({ isAnimating, speed }) {
           bot2BoolResultOperation === 1 &&
           bot1BoolResultOperation === 0
         ) {
+          bot1.setXValue(bot1.getXValue + 0);
+
           console.log(
             `${bot2.name} wins!`,
             `${bot1.name} loses`,
