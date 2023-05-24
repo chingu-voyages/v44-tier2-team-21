@@ -21,19 +21,18 @@ export const setWallCollisions = ({ bot, canvas }) => {
 };
 
 /**
- *
  * * we are passing positionArr which can be values of x position or y positions
  * * positionArr = [100, 150, 30, 70];
  */
 export const botCollision = (positionArr, botArr) => {
   const collidingArray = [];
   const BOT_SIZE = 50;
-  // * We are looping over each value in an array to compare.
+  // * We are looping over each value in the array of positions to check for the same instance of an x or y coordinate
   // * We are comparing if the difference is less than or equal to 50 which is the height and width of the bot
   for (let i = 0; i < positionArr.length; i++) {
     for (let j = 0; j < positionArr.length; j++) {
       if (i === j) {
-        // *If the index are same don't do anything and continue to rest of the loop
+        // *If the index are same don't do anything and continue to rest of the loop this is because we are comparing the first value of the array with itself
         continue;
       } else {
         // * If the difference is less than 50 that means collision happened
@@ -41,9 +40,8 @@ export const botCollision = (positionArr, botArr) => {
         if (Math.abs(positionArr[i] - positionArr[j]) <= BOT_SIZE) {
           // * Setting arr.length to 0 empty the array
           // * Remove already existing bots which were colliding,
-          // * we don't want to keep them and cause confusion.
           collidingArray.length = 0;
-          // * Push the bots which are currently colliding
+          // * Push the bots that are colliding
           collidingArray.push(botArr[i]);
           collidingArray.push(botArr[j]);
           i++;
@@ -94,7 +92,7 @@ export function getAngleFromDirection(direction) {
 }
 
 /**
- * * Function to create a bot array with our Bot constructor class
+ * * Function to create a bot array with the Bot constructor class
  */
 export const constructBotsArray = (selectedBotsData, canvas) => {
   return selectedBotsData.map((bot) => {
@@ -118,6 +116,7 @@ export const constructBotsArray = (selectedBotsData, canvas) => {
 
 /**
  * * Calculating Boolean After Operation
+ * * This is creating a function to consolidate the BoolFunctions which requires the bot's operation and boolean values(bool1) and the opponent's boolean values(bool2)
  */
 
 export const returnBoolAfterOperation = (operation, bool1, bool2) => {
