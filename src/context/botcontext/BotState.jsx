@@ -4,24 +4,24 @@ import BotReducer from "./BotReducer";
 // DUMMY DATA
 const initialstate = {
   botdata: [
-    // {
-    //   bool: 1,
-    //   id: 1,
-    //   initDirection: "NORTH",
-    //   name: "gary",
-    //   operation: "AND",
-    //   color: "hotpink",
-    //   selected: false,
-    // },
-    // {
-    //   bool: 0,
-    //   id: 2,
-    //   initDirection: "EAST",
-    //   name: "cecil",
-    //   operation: "XOR",
-    //   color: "red",
-    //   selected: false,
-    // },
+    {
+      bool: 1,
+      id: 1,
+      initDirection: "NORTH",
+      name: "gary",
+      operation: "AND",
+      color: "hotpink",
+      selected: false,
+    },
+    {
+      bool: 0,
+      id: 2,
+      initDirection: "EAST",
+      name: "cecil",
+      operation: "XOR",
+      color: "red",
+      selected: false,
+    },
   ],
 };
 
