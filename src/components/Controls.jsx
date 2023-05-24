@@ -8,19 +8,21 @@ import { contructRandomSvg } from "../helper/BotFunctions";
 
 const Controls = () => {
   const [show, setShow] = useState(false);
+  const [name, setName] = useState("");
   const { botdata, setMainState, mainState } = useContext(BotContext);
-  const nameRef = useRef("");
   const boolRef = useRef(0);
   const colorRef = useRef("");
   const directionRef = useRef("");
   const operationRef = useRef("");
+
+  const isNameUnavailable = () => botdata.some((bot) => bot.name === name);
 
   const handleSubmit = (e) => {
     e.preventDefault();
 
     const formData = {
       id: botdata.length + 1,
-      name: nameRef?.current.value,
+      name,
       bool: parseInt(boolRef?.current.value),
       color: colorRef?.current?.value || "hotpink",
       initDirection: directionRef?.current?.value,
@@ -64,23 +66,28 @@ const Controls = () => {
               <label htmlFor="name" className="hidden">
                 name
               </label>
-              <input
-                required
-                type="text"
-                placeholder="NAME"
-                className="w-3/5 p-2 border border-white rounded-xl bg-transparent"
-                ref={nameRef}
-              />
-              <label htmlFor="init-direction" className="hidden">
-                COLOR
-              </label>
+              <div>
+                <input
+                  required
+                  type="text"
+                  placeholder="NAME"
+                  className="w-3/5 p-2 border border-white rounded-xl bg-transparent"
+                  onChange={(e) => setName(e.target.value)}
+                />
+                {isNameUnavailable() ? (
+                  <p className="text-xs text-red-500">
+                    this name is already in use
+                  </p>
+                ) : null}
+              </div>
+
               <label htmlFor="color" className="hidden">
                 Color
               </label>
               <input
                 type="text"
                 placeholder="COLOR"
-                className="w-3/5 p-2 border border-white rounded-xl bg-transparent"
+                className="w-3/5 p-2 border border-white rounded-xl bg-transparent h-10"
                 ref={colorRef}
               />
             </div>
@@ -142,7 +149,11 @@ const Controls = () => {
                 <option defaultValue="NOR">NOR</option>
               </select>
             </div>
-            <button className="border rounded-xl px-4 py-1" type="submit">
+            <button
+              className="border rounded-xl px-4 py-1"
+              type="submit"
+              disabled={isNameUnavailable()}
+            >
               SAVE
             </button>
           </form>
