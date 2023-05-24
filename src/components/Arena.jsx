@@ -1,9 +1,16 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import Canvas from "./Canvas";
+import { BotContext } from "../context/botcontext/BotState";
 
 const Arena = () => {
+  const data = useContext(BotContext);
   const [isAnimating, setIsAnimating] = useState(false);
   const [speed, setSpeed] = useState(3);
+  const selectedBots = data.botdata.filter((bot) => {
+    if (bot.selected === true) {
+      return bot;
+    }
+  });
 
   const handleToggleAnimation = () => {
     setIsAnimating((prev) => !prev);
@@ -33,6 +40,7 @@ const Arena = () => {
           type="button"
           className="px-8 py-3 font-semibold text-[#FCE300]"
           onClick={handleToggleAnimation}
+          disabled={selectedBots.length > 1 ? false : true}
         >
           {isAnimating ? "Stop" : "Battle!"}
         </button>
