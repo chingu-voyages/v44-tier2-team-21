@@ -1,6 +1,5 @@
 import { useState } from "react";
-// import Canvas from "./Canvas";
-import Canvas from "./HopeCanvasTest";
+import Canvas from "./Canvas";
 
 const Arena = () => {
   const [isAnimating, setIsAnimating] = useState(false);
