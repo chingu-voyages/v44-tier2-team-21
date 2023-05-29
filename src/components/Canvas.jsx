@@ -1,7 +1,7 @@
 import { useRef, useEffect, useContext} from "react";
 import PropTypes from "prop-types";
 import { BotContext } from "../context/botcontext/BotState";
-import { AND, OR, XOR, NOR } from "../helper/BoolFunctions";
+
 import {
   botCollision,
   constructBotsArray,
@@ -15,7 +15,8 @@ Canvas.propTypes = {
   speed: PropTypes.number.isRequired,
 };
 
-function Canvas({ isAnimating, speed }) {
+function Canvas({ isAnimating, speed, stopAnimation }) {
+
   const canvasRef = useRef(null);
   let animationFrameId = useRef(null);
 
@@ -25,6 +26,8 @@ function Canvas({ isAnimating, speed }) {
       return bot;
     }
   });
+
+  let stopTimeout = null;
 
   useEffect(() => {
     const canvas = canvasRef.current;
@@ -66,7 +69,8 @@ function Canvas({ isAnimating, speed }) {
 
       // !This array will have all the bots that are colliding.
 
-      console.log(collidingBotsArr);
+      // console.log(collidingBotsArr);
+      console.log(botsArray);
       if (areBotsColliding) {
         // *If the bots are colliding then remove the duplicates from combiniation of X and Y.
         // collidingBots = getUniqueArray(isCollidingArrX, isCollidingArrY);
@@ -96,7 +100,21 @@ function Canvas({ isAnimating, speed }) {
 
         // * Check winning bot
         if (bot1BoolResultOperation === bot2BoolResultOperation) {
-          console.log("TIE", bot1BoolResultOperation, bot2BoolResultOperation);
+
+            console.log("TIE", bot1BoolResultOperation, bot2BoolResultOperation);
+            // tie breaker: randomly select a winner
+            const randomWinner = Math.random() < 0.5 ? bot1 : bot2;
+            const loser = randomWinner === bot1 ? bot2 : bot1;
+  
+        // remove the losing bot from botsArray
+        botsArray.splice(botsArray.indexOf(loser), 1);
+  
+        console.log(
+          `${randomWinner.name} wins!`,
+          `${loser.name} loses`,
+          `${randomWinner.operation} ${randomWinner.bool}`,
+          `${loser.operation} ${loser.bool}`
+        );
         } else if (
           bot1BoolResultOperation === 1 &&
           bot2BoolResultOperation === 0
@@ -127,11 +145,7 @@ function Canvas({ isAnimating, speed }) {
           console.log("there's something wrong with your code");
         }
       }
-
-
       
-
-
       if (isAnimating) {
         animationFrameId.current = requestAnimationFrame(animate);
       }
