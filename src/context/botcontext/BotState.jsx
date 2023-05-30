@@ -5,22 +5,22 @@ import BotReducer from "./BotReducer";
 const initialstate = {
   botdata: [
     {
-      id: 1,
-      name: "Phil",
-      bool: 0,
-      initDirection: "west",
-    },
-    {
-      id: 2,
-      name: "Phil",
       bool: 1,
-      initDirection: "north",
+      id: 1,
+      initDirection: "NORTH",
+      name: "gary",
+      operation: "AND",
+      color: "hotpink",
+      selected: false,
     },
     {
-      id: 3,
-      name: "Phil",
       bool: 0,
-      initDirection: "south",
+      id: 2,
+      initDirection: "EAST",
+      name: "cecil",
+      operation: "XOR",
+      color: "red",
+      selected: false,
     },
   ],
 };
@@ -30,13 +30,24 @@ export const BotContext = createContext(initialstate);
 
 // PROVIDER
 export const BotProvider = ({ children }) => {
-  // const [state, dispatch] = useReducer(BotReducer, initialstate);
+  const [state, dispatch] = useReducer(BotReducer, initialstate);
   const [mainState, setMainState] = useState(initialstate);
+
+  //action
+  const selectedBots = (id) => {
+    dispatch({
+      type: "SELECTED",
+      payload: id,
+    });
+  };
+
   return (
     <BotContext.Provider
       value={{
         botdata: mainState?.botdata,
         setMainState,
+        mainState,
+        selectedBots,
       }}
     >
       {children}

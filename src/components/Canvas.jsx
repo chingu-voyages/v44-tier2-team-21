@@ -1,84 +1,192 @@
-import { useRef, useEffect } from "react";
+import { useRef, useEffect, useContext } from 'react';
+import PropTypes from 'prop-types';
+import { BotContext } from '../context/botcontext/BotState';
 
-function Canvas() {
+import {
+  botCollision,
+  constructBotsArray,
+  getUniqueArray,
+  returnBoolAfterOperation,
+  setWallCollisions,
+} from '../helper/BotFunctions';
+
+Canvas.propTypes = {
+  isAnimating: PropTypes.bool.isRequired,
+  speed: PropTypes.number.isRequired,
+};
+
+function Canvas({ isAnimating, speed, stopAnimation }) {
   const canvasRef = useRef(null);
+  let animationFrameId = useRef(null);
+
+  const data = useContext(BotContext);
+  const selectedBotsData = data.botdata.filter((bot) => {
+    if (bot.selected === true) {
+      return bot;
+    }
+  });
+
+  let stopTimeout = null;
+
+  function drawGrid(canvas, gridSize) {
+    const context = canvas.getContext('2d');
+    const squareSize = canvas.width / gridSize;
+
+    context.strokeStyle = '#000'; // Color of the grid lines
+
+    for (let x = 0; x < gridSize; x++) {
+      for (let y = 0; y < gridSize; y++) {
+        const xPos = x * squareSize;
+        const yPos = y * squareSize;
+
+        context.strokeRect(xPos, yPos, squareSize, squareSize);
+      }
+    }
+  }
 
   useEffect(() => {
     const canvas = canvasRef.current;
-    const context = canvas.getContext("2d");
+    const context = canvas.getContext('2d');
 
-    let x1 = 80;
-    let y1 = 180;
-    let x2 = 200;
-    let y2 = 100;
-    let x1Speed = 1;
-    let y1Speed = 2;
-    let x2Speed = -2;
-    let y2Speed = 1;
+    context.clearRect(0, 0, canvas.width, canvas.height);
+
+    const botsArray = constructBotsArray(selectedBotsData, canvas);
 
     function animate() {
-      requestAnimationFrame(animate);
       context.clearRect(0, 0, canvas.width, canvas.height);
 
-      // Draw the first square
-      context.fillStyle = "blue";
-      context.fillRect(x1, y1, 50, 50);
+      // * Loop over each bot value in the array to draw and animate
+      botsArray.forEach((bot) => {
+        const icon = new Image();
+        icon.src = bot.image;
+        const defaultAngle = bot.getAngle();
+        const defaultDx = speed * Math.cos(defaultAngle);
+        const defaultDy = speed * Math.sin(defaultAngle);
+        bot.draw(context, bot.getXValue(), bot.getYValue(), icon);
+        bot.setXValue(bot.getXValue() + defaultDx);
+        bot.setYValue(bot.getYValue() + defaultDy);
 
-      // Draw the second square
-      context.fillStyle = "red";
-      context.fillRect(x2, y2, 50, 50);
+        //* wall collision event
+        setWallCollisions({ bot, canvas });
+      });
 
-      // Update the position of the first square
-      x1 += x1Speed;
-      y1 += y1Speed;
+      // * Arrays of X and Y positions
+      const xPositionForBots = [];
+      const yPositionsForBots = [];
 
-      // Update the position of the second square
-      x2 += x2Speed;
-      y2 += y2Speed;
+      // *Move X and Y position for bots in a separate arrays so we can compare them
+      botsArray.forEach((elem) => {
+        xPositionForBots.push(elem.x);
+        yPositionsForBots.push(elem.y);
+      });
 
-      // Check if the first square has reached the edges of the canvas
-      if (x1 + 50 >= canvas.width) {
-        x1 = canvas.width - 50;
-        x1Speed = Math.random() * -10;
-      } else if (x1 <= 0) {
-        x1 = 0;
-        x1Speed = Math.random() * 10;
+      // *Check if any of the array of X and array of Y collides.
+      const collidingBotsArr = botCollision(botsArray);
+      const areBotsColliding = collidingBotsArr.length;
+
+      // !This array will have all the bots that are colliding.
+
+      // console.log(collidingBotsArr);
+      console.log(botsArray);
+      if (areBotsColliding) {
+        // *If the bots are colliding then remove the duplicates from combiniation of X and Y.
+        // collidingBots = getUniqueArray(isCollidingArrX, isCollidingArrY);
+        let dx = 0;
+        let dy = 0;
+
+        // * setting bot1
+        let bot1 = collidingBotsArr[0];
+        let bot2 = collidingBotsArr[1];
+
+        // * code that will pause the colliding bots
+
+        // * calculate the bool value of each bot after applying operation
+        const bot1BoolResultOperation = returnBoolAfterOperation(
+          bot1.operation,
+          bot1.bool,
+          bot2.bool
+        );
+
+        const bot2BoolResultOperation = returnBoolAfterOperation(
+          bot2.operation,
+          bot2.bool,
+          bot1.bool
+        );
+
+        console.log(bot1BoolResultOperation, bot2BoolResultOperation);
+
+        // * Check winning bot
+        if (bot1BoolResultOperation === bot2BoolResultOperation) {
+          console.log(
+            'TIE',
+            bot1BoolResultOperation,
+            bot2BoolResultOperation
+          );
+          // tie breaker: randomly select a winner
+          const randomWinner = Math.random() < 0.5 ? bot1 : bot2;
+          const loser = randomWinner === bot1 ? bot2 : bot1;
+
+          // remove the losing bot from botsArray
+          botsArray.splice(botsArray.indexOf(loser), 1);
+
+          console.log(
+            `${randomWinner.name} wins!`,
+            `${loser.name} loses`,
+            `${randomWinner.operation} ${randomWinner.bool}`,
+            `${loser.operation} ${loser.bool}`
+          );
+        } else if (
+          bot1BoolResultOperation === 1 &&
+          bot2BoolResultOperation === 0
+        ) {
+          // bot1 wins, remove bot2 from botsArray
+          botsArray.splice(botsArray.indexOf(bot2), 1);
+
+          console.log(
+            `${bot1.name} wins`,
+            `${bot2.name} loses`,
+            `${bot1.operation} ${bot1.bool}`,
+            `${bot2.operation} ${bot2.bool}`
+          );
+        } else if (
+          bot2BoolResultOperation === 1 &&
+          bot1BoolResultOperation === 0
+        ) {
+          // bot2 wins, remove bot1 from botsArray
+          botsArray.splice(botsArray.indexOf(bot1), 1);
+
+          console.log(
+            `${bot2.name} wins!`,
+            `${bot1.name} loses`,
+            `${bot2.operation} ${bot2.bool}`,
+            `${bot1.operation} ${bot1.bool}`
+          );
+        } else {
+          console.log("there's something wrong with your code");
+        }
       }
 
-      if (y1 + 50 >= canvas.height) {
-        y1 = canvas.height - 50;
-        y1Speed = Math.random() * -10;
-      } else if (y1 <= 0) {
-        y1 = 0;
-        y1Speed = Math.random() * 10;
-      }
-
-      // Check if the second square has reached the edges of the canvas
-      if (x2 + 50 >= canvas.width) {
-        x2 = canvas.width - 50;
-        x2Speed = Math.random() * -10;
-      } else if (x2 <= 0) {
-        x2 = 0;
-        x2Speed = Math.random() * 10;
-      }
-
-      if (y2 + 50 >= canvas.height) {
-        y2 = canvas.height - 50;
-        y2Speed = Math.random() * -10;
-      } else if (y2 <= 0) {
-        y2 = 0;
-        y2Speed = Math.random() * 10;
+      if (isAnimating) {
+        drawGrid(canvas, 8);
+        animationFrameId.current = requestAnimationFrame(animate);
       }
     }
-    animate();
-  }, []);
+
+    if (isAnimating) {
+      animate();
+    }
+
+    return () => {
+      cancelAnimationFrame(animationFrameId.current);
+    };
+  }, [isAnimating, speed, selectedBotsData]);
 
   return (
     <canvas
       ref={canvasRef}
       width={480}
       height={480}
-      className="border-4 rounded-lg border-[#2803fc]"
+      className='border-4 rounded-xl border-[#0029ff]'
     />
   );
 }
