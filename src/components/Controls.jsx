@@ -33,7 +33,11 @@ const Controls = () => {
     setMainState({ ...mainState, botdata: [...botdata, formData] });
     setShow(!show);
   };
-  console.log(botdata);
+
+  const handleClick = () => {
+    setName("");
+    setShow(!show);
+  };
 
   return (
     <div className="w-full h-full bg-[#1E1E1E] text-[#FFFFFF] text-center border-4 rounded-md border-[#FF0000] max-w-sm px-5">
@@ -43,10 +47,9 @@ const Controls = () => {
       {botdata.map((bot) => {
         return <AddedBots bot={bot} key={bot.id} />;
       })}
-
       {!show && (
         <button
-          onClick={() => setShow(!show)}
+          onClick={handleClick}
           className={
             botdata.length === 4
               ? "hidden"
