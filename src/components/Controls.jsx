@@ -33,6 +33,7 @@ const Controls = () => {
     setMainState({ ...mainState, botdata: [...botdata, formData] });
     setShow(!show);
   };
+  console.log(botdata);
 
   return (
     <div className="w-full h-full bg-[#1E1E1E] text-[#FFFFFF] text-center border-4 rounded-md border-[#FF0000] max-w-sm px-5">
@@ -46,7 +47,11 @@ const Controls = () => {
       {!show && (
         <button
           onClick={() => setShow(!show)}
-          className="px-9 py-2 mt-3 rounded-full bg-[#D9D9D9] text-[#000000]"
+          className={
+            botdata.length === 4
+              ? "hidden"
+              : "px-9 py-2 mt-3 rounded-full bg-[#D9D9D9] text-[#000000]"
+          }
         >
           + Add Bot
         </button>
