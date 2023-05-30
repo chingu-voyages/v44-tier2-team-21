@@ -1,6 +1,7 @@
 import { useContext, useState } from "react";
 import Canvas from "./Canvas";
 import { BotContext } from "../context/botcontext/BotState";
+import Instructions from "./Instructions";
 
 const Arena = () => {
   const data = useContext(BotContext);
@@ -16,11 +17,11 @@ const Arena = () => {
     setIsAnimating((prev) => !prev);
   };
   return (
-    <div className="w-3/6 h-full bg-[#1e1e1e] text-[#FFFFFF] flex flex-col items-center">
+    <div className="w-3/6 mx-auto h-full bg-[#1e1e1e] text-[#FFFFFF] flex flex-col items-center">
       <Canvas isAnimating={isAnimating} speed={speed} />
       <div>
-        <div className="speed-operation my-10">
-          <div className="speed form-group">
+        <div className="speed-battle mt-5 mb-7 flex justify-center">
+          <div className="speed form-group mr-14">
             <label htmlFor="speed" className="mr-3">
               SPEED
             </label>
@@ -35,15 +36,16 @@ const Arena = () => {
               }}
             />
           </div>
+          <button
+            type="button"
+            className="font-semibold text-[#FCE300]"
+            onClick={handleToggleAnimation}
+            disabled={selectedBots.length > 1 ? false : true}
+          >
+            {isAnimating ? "Stop" : "Battle!"}
+          </button>
         </div>
-        <button
-          type="button"
-          className="px-8 py-3 font-semibold text-[#FCE300]"
-          onClick={handleToggleAnimation}
-          disabled={selectedBots.length > 1 ? false : true}
-        >
-          {isAnimating ? "Stop" : "Battle!"}
-        </button>
+        <Instructions />
       </div>
     </div>
   );
