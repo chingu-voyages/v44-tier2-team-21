@@ -1,6 +1,6 @@
-import { useRef, useEffect, useContext} from "react";
-import PropTypes from "prop-types";
-import { BotContext } from "../context/botcontext/BotState";
+import { useRef, useEffect, useContext } from 'react';
+import PropTypes from 'prop-types';
+import { BotContext } from '../context/botcontext/BotState';
 
 import {
   botCollision,
@@ -8,7 +8,7 @@ import {
   getUniqueArray,
   returnBoolAfterOperation,
   setWallCollisions,
-} from "../helper/BotFunctions";
+} from '../helper/BotFunctions';
 
 Canvas.propTypes = {
   isAnimating: PropTypes.bool.isRequired,
@@ -16,7 +16,6 @@ Canvas.propTypes = {
 };
 
 function Canvas({ isAnimating, speed, stopAnimation }) {
-
   const canvasRef = useRef(null);
   let animationFrameId = useRef(null);
 
@@ -29,9 +28,27 @@ function Canvas({ isAnimating, speed, stopAnimation }) {
 
   let stopTimeout = null;
 
+  function drawGrid(canvas, gridSize) {
+    const context = canvas.getContext('2d');
+    const squareSize = canvas.width / gridSize;
+
+    context.strokeStyle = '#000'; // Color of the grid lines
+
+    for (let x = 0; x < gridSize; x++) {
+      for (let y = 0; y < gridSize; y++) {
+        const xPos = x * squareSize;
+        const yPos = y * squareSize;
+
+        context.strokeRect(xPos, yPos, squareSize, squareSize);
+      }
+    }
+  }
+
   useEffect(() => {
     const canvas = canvasRef.current;
-    const context = canvas.getContext("2d");
+    const context = canvas.getContext('2d');
+
+    context.clearRect(0, 0, canvas.width, canvas.height);
 
     const botsArray = constructBotsArray(selectedBotsData, canvas);
 
@@ -100,21 +117,24 @@ function Canvas({ isAnimating, speed, stopAnimation }) {
 
         // * Check winning bot
         if (bot1BoolResultOperation === bot2BoolResultOperation) {
+          console.log(
+            'TIE',
+            bot1BoolResultOperation,
+            bot2BoolResultOperation
+          );
+          // tie breaker: randomly select a winner
+          const randomWinner = Math.random() < 0.5 ? bot1 : bot2;
+          const loser = randomWinner === bot1 ? bot2 : bot1;
 
-            console.log("TIE", bot1BoolResultOperation, bot2BoolResultOperation);
-            // tie breaker: randomly select a winner
-            const randomWinner = Math.random() < 0.5 ? bot1 : bot2;
-            const loser = randomWinner === bot1 ? bot2 : bot1;
-  
-        // remove the losing bot from botsArray
-        botsArray.splice(botsArray.indexOf(loser), 1);
-  
-        console.log(
-          `${randomWinner.name} wins!`,
-          `${loser.name} loses`,
-          `${randomWinner.operation} ${randomWinner.bool}`,
-          `${loser.operation} ${loser.bool}`
-        );
+          // remove the losing bot from botsArray
+          botsArray.splice(botsArray.indexOf(loser), 1);
+
+          console.log(
+            `${randomWinner.name} wins!`,
+            `${loser.name} loses`,
+            `${randomWinner.operation} ${randomWinner.bool}`,
+            `${loser.operation} ${loser.bool}`
+          );
         } else if (
           bot1BoolResultOperation === 1 &&
           bot2BoolResultOperation === 0
@@ -145,8 +165,9 @@ function Canvas({ isAnimating, speed, stopAnimation }) {
           console.log("there's something wrong with your code");
         }
       }
-      
+
       if (isAnimating) {
+        drawGrid(canvas, 8);
         animationFrameId.current = requestAnimationFrame(animate);
       }
     }
@@ -165,7 +186,7 @@ function Canvas({ isAnimating, speed, stopAnimation }) {
       ref={canvasRef}
       width={480}
       height={480}
-      className="border-4 rounded-xl border-[#0029ff]"
+      className='border-4 rounded-xl border-[#0029ff]'
     />
   );
 }
