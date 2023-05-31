@@ -1,6 +1,6 @@
-import { useRef, useEffect, useContext } from 'react';
-import PropTypes from 'prop-types';
-import { BotContext } from '../context/botcontext/BotState';
+import { useRef, useEffect, useContext } from "react";
+import PropTypes from "prop-types";
+import { BotContext } from "../context/botcontext/BotState";
 
 import {
   botCollision,
@@ -8,7 +8,7 @@ import {
   getUniqueArray,
   returnBoolAfterOperation,
   setWallCollisions,
-} from '../helper/BotFunctions';
+} from "../helper/BotFunctions";
 
 Canvas.propTypes = {
   isAnimating: PropTypes.bool.isRequired,
@@ -29,10 +29,10 @@ function Canvas({ isAnimating, speed, stopAnimation }) {
   let stopTimeout = null;
 
   function drawGrid(canvas, gridSize) {
-    const context = canvas.getContext('2d');
+    const context = canvas.getContext("2d");
     const squareSize = canvas.width / gridSize;
 
-    context.strokeStyle = '#000'; // Color of the grid lines
+    context.strokeStyle = "#000"; // Color of the grid lines
 
     for (let x = 0; x < gridSize; x++) {
       for (let y = 0; y < gridSize; y++) {
@@ -46,7 +46,7 @@ function Canvas({ isAnimating, speed, stopAnimation }) {
 
   useEffect(() => {
     const canvas = canvasRef.current;
-    const context = canvas.getContext('2d');
+    const context = canvas.getContext("2d");
 
     context.clearRect(0, 0, canvas.width, canvas.height);
 
@@ -86,7 +86,6 @@ function Canvas({ isAnimating, speed, stopAnimation }) {
 
       // !This array will have all the bots that are colliding.
 
-      // console.log(collidingBotsArr);
       console.log(botsArray);
       if (areBotsColliding) {
         // *If the bots are colliding then remove the duplicates from combiniation of X and Y.
@@ -117,11 +116,7 @@ function Canvas({ isAnimating, speed, stopAnimation }) {
 
         // * Check winning bot
         if (bot1BoolResultOperation === bot2BoolResultOperation) {
-          console.log(
-            'TIE',
-            bot1BoolResultOperation,
-            bot2BoolResultOperation
-          );
+          console.log("TIE", bot1BoolResultOperation, bot2BoolResultOperation);
           // tie breaker: randomly select a winner
           const randomWinner = Math.random() < 0.5 ? bot1 : bot2;
           const loser = randomWinner === bot1 ? bot2 : bot1;
@@ -186,7 +181,7 @@ function Canvas({ isAnimating, speed, stopAnimation }) {
       ref={canvasRef}
       width={480}
       height={480}
-      className='border-4 rounded-xl border-[#0029ff]'
+      className="border-4 rounded-xl border-[#0029ff]"
     />
   );
 }

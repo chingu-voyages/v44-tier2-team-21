@@ -17,10 +17,10 @@ const Arena = () => {
     setIsAnimating((prev) => !prev);
   };
   return (
-    <div className="w-3/6 mx-auto h-full bg-[#1e1e1e] text-[#FFFFFF] flex flex-col items-center">
+    <div className="w-3/6 px-16 mx-auto h-full bg-[#1e1e1e] text-[#FFFFFF] flex flex-col items-center">
       <Canvas isAnimating={isAnimating} speed={speed} />
       <div>
-        <div className="speed-battle mt-5 mb-7 flex justify-center">
+        <div className="speed-battle my-12 flex justify-center items-center">
           <div className="speed form-group mr-14">
             <label htmlFor="speed" className="mr-3">
               SPEED
