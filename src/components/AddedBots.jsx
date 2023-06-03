@@ -3,7 +3,7 @@ import menu from '../assets/menu.svg';
 import { BotContext } from '../context/botcontext/BotState';
 import { contructRandomSvg } from '../helper/BotFunctions';
 
-const AddedBots = ({ bot }) => {
+const AddedBots = ({ bot, handleClick, openMenu }) => {
   const { botdata, setMainState } = useContext(BotContext);
 
   return (
@@ -37,11 +37,11 @@ const AddedBots = ({ bot }) => {
         </div>
       </div>
       <div className='flex-shrink-0'>
-        <img
-          src={menu}
-          alt=''
+      <h1 onClick={handleClick}
           className='ml-4 w-12 h-16 cursor-pointer'
-        />
+      >
+        EDIT
+      </h1>
       </div>
     </div>
   );
