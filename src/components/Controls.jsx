@@ -4,7 +4,6 @@ import AddedBots from "./AddedBots";
 
 // BOT CONTEXT IMPORTED
 import { BotContext } from "../context/botcontext/BotState";
-import { contructRandomSvg } from "../helper/BotFunctions";
 
 const Controls = () => {
   const [show, setShow] = useState(false);
@@ -43,6 +42,7 @@ const Controls = () => {
       initDirection: directionRef?.current?.value,
       operation: operationRef.current.value,
       selected: false,
+      score: 0,
     };
 
     if (editBotData) {

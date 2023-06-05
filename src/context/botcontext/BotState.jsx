@@ -1,28 +1,9 @@
-import React, { createContext, useReducer, useState } from "react";
+import React, { createContext, useReducer, useState, useMemo } from "react";
 import BotReducer from "./BotReducer";
 
 // DUMMY DATA
 const initialstate = {
-  botdata: [
-    {
-      bool: 1,
-      id: 1,
-      initDirection: "NORTH",
-      name: "gary",
-      operation: "AND",
-      color: "hotpink",
-      selected: false,
-    },
-    {
-      bool: 0,
-      id: 2,
-      initDirection: "EAST",
-      name: "cecil",
-      operation: "XOR",
-      color: "red",
-      selected: false,
-    },
-  ],
+  botdata: [],
 };
 
 // CONTEXT
@@ -33,24 +14,15 @@ export const BotProvider = ({ children }) => {
   const [state, dispatch] = useReducer(BotReducer, initialstate);
   const [mainState, setMainState] = useState(initialstate);
 
-  //action
-  const selectedBots = (id) => {
-    dispatch({
-      type: "SELECTED",
-      payload: id,
-    });
-  };
+  const contextValue = useMemo(() => {
+    return {
+      botdata: mainState.botdata,
+      setMainState,
+      mainState,
+    };
+  }, [mainState]);
 
   return (
-    <BotContext.Provider
-      value={{
-        botdata: mainState?.botdata,
-        setMainState,
-        mainState,
-        selectedBots,
-      }}
-    >
-      {children}
-    </BotContext.Provider>
+    <BotContext.Provider value={contextValue}>{children}</BotContext.Provider>
   );
 };
