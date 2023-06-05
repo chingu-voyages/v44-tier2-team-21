@@ -28,6 +28,8 @@ function Canvas({ isAnimating, speed, stopAnimation }) {
 
   let stopTimeout = null;
 
+  //* GRIDZ
+
   function drawGrid(canvas, gridSize) {
     const context = canvas.getContext("2d");
     const squareSize = canvas.width / gridSize;
@@ -84,16 +86,13 @@ function Canvas({ isAnimating, speed, stopAnimation }) {
       const collidingBotsArr = botCollision(botsArray);
       const areBotsColliding = collidingBotsArr.length;
 
-      // !This array will have all the bots that are colliding.
-
-      console.log(botsArray);
       if (areBotsColliding) {
         // *If the bots are colliding then remove the duplicates from combiniation of X and Y.
         // collidingBots = getUniqueArray(isCollidingArrX, isCollidingArrY);
         let dx = 0;
         let dy = 0;
 
-        // * setting bot1
+        // *setting the first 2 bots colliding since there can be multiple colliding at a time
         let bot1 = collidingBotsArr[0];
         let bot2 = collidingBotsArr[1];
 
@@ -111,51 +110,54 @@ function Canvas({ isAnimating, speed, stopAnimation }) {
           bot2.bool,
           bot1.bool
         );
-
-        console.log(bot1BoolResultOperation, bot2BoolResultOperation);
-
         // * Check winning bot
         if (bot1BoolResultOperation === bot2BoolResultOperation) {
+          // !THIS IS A TIE LOGIC
           console.log("TIE", bot1BoolResultOperation, bot2BoolResultOperation);
-          // tie breaker: randomly select a winner
-          const randomWinner = Math.random() < 0.5 ? bot1 : bot2;
-          const loser = randomWinner === bot1 ? bot2 : bot1;
 
-          // remove the losing bot from botsArray
-          botsArray.splice(botsArray.indexOf(loser), 1);
+          if (botsArray.length === 2) {
+            // * tie breaker: randomly select a winner
+            const randomWinner = Math.random() < 0.5 ? bot1 : bot2;
+            const loser = randomWinner === bot1 ? bot2 : bot1;
 
-          console.log(
-            `${randomWinner.name} wins!`,
-            `${loser.name} loses`,
-            `${randomWinner.operation} ${randomWinner.bool}`,
-            `${loser.operation} ${loser.bool}`
-          );
+            // * remove the losing bot from botsArray
+            botsArray.splice(botsArray.indexOf(loser), 1);
+          }
         } else if (
           bot1BoolResultOperation === 1 &&
           bot2BoolResultOperation === 0
         ) {
-          // bot1 wins, remove bot2 from botsArray
-          botsArray.splice(botsArray.indexOf(bot2), 1);
+          // !THIS IS WHEN BOT1 WINS
 
-          console.log(
-            `${bot1.name} wins`,
-            `${bot2.name} loses`,
-            `${bot1.operation} ${bot1.bool}`,
-            `${bot2.operation} ${bot2.bool}`
-          );
+          // * bot1 wins, remove bot2 from botsArray
+          botsArray.splice(botsArray.indexOf(bot2), 1);
+          // * Increment Score at the main state
+
+          const newBotData = data.botdata.map((elem) => {
+            if (elem.id === bot1.id) {
+              elem.score++;
+            }
+            return elem;
+          });
+          data.setMainState({ botdata: newBotData });
         } else if (
           bot2BoolResultOperation === 1 &&
           bot1BoolResultOperation === 0
         ) {
-          // bot2 wins, remove bot1 from botsArray
+          // !THIS IS WHEN BOT2 WINS
+
+          // *bot2 wins, remove bot1 from botsArray
           botsArray.splice(botsArray.indexOf(bot1), 1);
 
-          console.log(
-            `${bot2.name} wins!`,
-            `${bot1.name} loses`,
-            `${bot2.operation} ${bot2.bool}`,
-            `${bot1.operation} ${bot1.bool}`
-          );
+          // * Increment Score
+
+          const newBotData = data.botdata.map((elem) => {
+            if (elem.id === bot2.id) {
+              elem.score++;
+            }
+            return elem;
+          });
+          data.setMainState({ botdata: newBotData });
         } else {
           console.log("there's something wrong with your code");
         }
@@ -174,7 +176,7 @@ function Canvas({ isAnimating, speed, stopAnimation }) {
     return () => {
       cancelAnimationFrame(animationFrameId.current);
     };
-  }, [isAnimating, speed, selectedBotsData]);
+  }, [isAnimating, speed]);
 
   return (
     <canvas
