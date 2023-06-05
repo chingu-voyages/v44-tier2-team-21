@@ -16,20 +16,20 @@ const Controls = () => {
   const operationRef = useRef("");
 
   const isNameUnavailable = () =>
-  botdata.some((bot) => bot.name === name && (!editBotData || bot.id !== editBotData.id));
+    botdata.some(
+      (bot) => bot.name === name && (!editBotData || bot.id !== editBotData.id)
+    );
 
-
-    // populate the form with the bot data to be edited
-    const editBot = (bot) => {
-      setName(bot.name);
-      boolRef.current.value = bot.bool;
-      colorRef.current.value = bot.color;
-      directionRef.current.value = bot.initDirection;
-      operationRef.current.value = bot.operation;
-      setEditBotData(bot);
-      setShow(true);
-    };
-  
+  // populate the form with the bot data to be edited
+  const editBot = (bot) => {
+    setName(bot.name);
+    boolRef.current.value = bot.bool;
+    colorRef.current.value = bot.color;
+    directionRef.current.value = bot.initDirection;
+    operationRef.current.value = bot.operation;
+    setEditBotData(bot);
+    setShow(true);
+  };
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -48,20 +48,22 @@ const Controls = () => {
     if (editBotData) {
       setMainState({
         ...mainState,
-            botdata: botdata.map((bot) => bot.id === editBotData.id ? formData : bot),
-        });
+        botdata: botdata.map((bot) =>
+          bot.id === editBotData.id ? formData : bot
+        ),
+      });
     } else {
-          setMainState({ ...mainState, botdata: [...botdata, formData] });
+      setMainState({ ...mainState, botdata: [...botdata, formData] });
     }
-    
-        // Reset form and state
-        setName("");
-        boolRef.current.value = "";
-        colorRef.current.value = "";
-        directionRef.current.value = "";
-        operationRef.current.value = "";
-        setEditBotData(null);
-        setShow(false);
+
+    // Reset form and state
+    setName("");
+    boolRef.current.value = "";
+    colorRef.current.value = "";
+    directionRef.current.value = "";
+    operationRef.current.value = "";
+    setEditBotData(null);
+    setShow(false);
   };
 
   const handleDelete = (e) => {
@@ -82,7 +84,6 @@ const Controls = () => {
     setShow(false);
   };
 
-
   const handleClick = () => {
     setName("");
     setShow(!show);
@@ -94,7 +95,14 @@ const Controls = () => {
       <h3 className="mb-3">{botdata.length ? "Select Players" : ""}</h3>
       {/* displaying bot data */}
       {botdata.map((bot) => {
-        return <AddedBots bot={bot} key={bot.id} handleClick={() => editBot(bot)} openMenu={handleClick} />;
+        return (
+          <AddedBots
+            bot={bot}
+            key={bot.id}
+            handleClick={() => editBot(bot)}
+            openMenu={handleClick}
+          />
+        );
       })}
       {!show && (
         <button
@@ -124,6 +132,7 @@ const Controls = () => {
                   type="text"
                   placeholder="NAME"
                   className="w-3/5 p-2 border border-white rounded-xl bg-transparent"
+                  maxLength={10}
                   onChange={(e) => setName(e.target.value)}
                 />
                 {isNameUnavailable() ? (
