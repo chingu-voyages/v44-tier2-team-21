@@ -2,8 +2,21 @@ import { useContext, useState } from 'react';
 import Canvas from './Canvas';
 import { BotContext } from '../context/botcontext/BotState';
 import Instructions from './Instructions';
+import InstructionsModalButton from './InstructionsModalButton';
+import InstructionsModal from './InstructionsModal';
 
 const Arena = () => {
+  const [isInstructionsModalOpen, setInstructionsModalOpen] =
+    useState(false);
+
+  const handleButtonClick = () => {
+    setInstructionsModalOpen(true);
+  };
+
+  const closeInstructionsModal = () => {
+    setInstructionsModalOpen(false);
+  };
+
   const data = useContext(BotContext);
   const [isAnimating, setIsAnimating] = useState(false);
   const [speed, setSpeed] = useState(3);
@@ -45,8 +58,18 @@ const Arena = () => {
             {isAnimating ? 'Stop' : 'Battle!'}
           </button>
         </div>
-        <Instructions />
+        <div className='h-2/6 flex flex-col justify-center items-center text-[#ffffff] text-xs mx-auto'>
+          <InstructionsModalButton
+            handleButtonClick={handleButtonClick}
+          />
+          <Instructions />
+        </div>
       </div>
+      {isInstructionsModalOpen && (
+        <InstructionsModal
+          closeInstructionsModal={closeInstructionsModal}
+        />
+      )}
     </div>
   );
 };
