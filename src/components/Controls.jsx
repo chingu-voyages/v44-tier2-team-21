@@ -4,34 +4,84 @@ import AddedBots from "./AddedBots";
 
 // BOT CONTEXT IMPORTED
 import { BotContext } from "../context/botcontext/BotState";
-import { contructRandomSvg } from "../helper/BotFunctions";
 
 const Controls = () => {
   const [show, setShow] = useState(false);
   const [name, setName] = useState("");
+  const [editBotData, setEditBotData] = useState(null);
   const { botdata, setMainState, mainState } = useContext(BotContext);
   const boolRef = useRef(0);
   const colorRef = useRef("");
   const directionRef = useRef("");
   const operationRef = useRef("");
 
-  const isNameUnavailable = () => botdata.some((bot) => bot.name === name);
+  const isNameUnavailable = () =>
+    botdata.some(
+      (bot) => bot.name === name && (!editBotData || bot.id !== editBotData.id)
+    );
+
+  // populate the form with the bot data to be edited
+  const editBot = (bot) => {
+    setName(bot.name);
+    boolRef.current.value = bot.bool;
+    colorRef.current.value = bot.color;
+    directionRef.current.value = bot.initDirection;
+    operationRef.current.value = bot.operation;
+    setEditBotData(bot);
+    setShow(true);
+  };
 
   const handleSubmit = (e) => {
     e.preventDefault();
 
     const formData = {
-      id: botdata.length + 1,
+      id: editBotData ? editBotData.id : botdata.length + 1,
       name,
       bool: parseInt(boolRef?.current.value),
       color: colorRef?.current?.value || "hotpink",
       initDirection: directionRef?.current?.value,
       operation: operationRef.current.value,
       selected: false,
+      score: 0,
     };
 
-    setMainState({ ...mainState, botdata: [...botdata, formData] });
-    setShow(!show);
+    if (editBotData) {
+      setMainState({
+        ...mainState,
+        botdata: botdata.map((bot) =>
+          bot.id === editBotData.id ? formData : bot
+        ),
+      });
+    } else {
+      setMainState({ ...mainState, botdata: [...botdata, formData] });
+    }
+
+    // Reset form and state
+    setName("");
+    boolRef.current.value = "";
+    colorRef.current.value = "";
+    directionRef.current.value = "";
+    operationRef.current.value = "";
+    setEditBotData(null);
+    setShow(false);
+  };
+
+  const handleDelete = (e) => {
+    e.preventDefault();
+    if (editBotData) {
+      setMainState({
+        ...mainState,
+        botdata: botdata.filter((bot) => bot.id !== editBotData.id),
+      });
+    }
+    // Reset form and state
+    setName("");
+    boolRef.current.value = "";
+    colorRef.current.value = "";
+    directionRef.current.value = "";
+    operationRef.current.value = "";
+    setEditBotData(null);
+    setShow(false);
   };
 
   const handleClick = () => {
@@ -45,7 +95,14 @@ const Controls = () => {
       <h3 className="mb-3">{botdata.length ? "Select Players" : ""}</h3>
       {/* displaying bot data */}
       {botdata.map((bot) => {
-        return <AddedBots bot={bot} key={bot.id} />;
+        return (
+          <AddedBots
+            bot={bot}
+            key={bot.id}
+            handleClick={() => editBot(bot)}
+            openMenu={handleClick}
+          />
+        );
       })}
       {!show && (
         <button
@@ -75,6 +132,7 @@ const Controls = () => {
                   type="text"
                   placeholder="NAME"
                   className="w-3/5 p-2 border border-white rounded-xl bg-transparent"
+                  maxLength={10}
                   onChange={(e) => setName(e.target.value)}
                 />
                 {isNameUnavailable() ? (
@@ -158,6 +216,14 @@ const Controls = () => {
               disabled={isNameUnavailable()}
             >
               SAVE
+            </button>
+            <button
+              className="border rounded-xl px-4 py-1"
+              type="submit"
+              disabled={isNameUnavailable()}
+              onClick={handleDelete}
+            >
+              DELETE
             </button>
           </form>
         </div>
