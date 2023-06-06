@@ -1,6 +1,6 @@
 const Instructions = () => {
   return (
-    <div className='xl:hidden'>
+    <div className='hidden 2xl:block'>
       <h3 className='mb-3'>Instructions:</h3>
       <ol className='list-decimal'>
         <li>
