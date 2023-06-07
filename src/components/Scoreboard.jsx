@@ -1,6 +1,6 @@
-import { useContext, useEffect, useState } from "react";
-import { BotContext } from "../context/botcontext/BotState";
-import LeaderBots from "./LeaderBots";
+import { useContext, useEffect, useState } from 'react';
+import { BotContext } from '../context/botcontext/BotState';
+import LeaderBots from './LeaderBots';
 
 const Scoreboard = ({ scores }) => {
   const data = useContext(BotContext);
@@ -22,8 +22,8 @@ const Scoreboard = ({ scores }) => {
   }, [JSON.stringify(data.botdata)]);
 
   return (
-    <div className="ml-2 w-full h-full bg-[#1E1E1E] text-[#FFFFFF] text-center border-4 rounded-md border-[#FF0000] max-w-sm">
-      <h2 className="mb-7 text-2xl mt-5">LEADERBOARD</h2>
+    <div className='ml-6 w-full h-full bg-[#1E1E1E] text-[#FFFFFF] text-center border-4 rounded-md border-[#FF0000] max-w-sm'>
+      <h2 className='mb-7 text-2xl mt-5'>LEADERBOARD</h2>
       <LeaderBots data={leaderData} />
     </div>
   );
