@@ -33,7 +33,7 @@ const AddedBots = ({ bot, handleClick, openMenu }) => {
         </div>
       </div>
       <div className="flex flex-shrink-0">
-        <h1 onClick={handleClick} className="ml-4 cursor-pointer">
+      <h1 onClick={() => handleClick(bot)} className="ml-4 cursor-pointer">
           EDIT
         </h1>
       </div>
