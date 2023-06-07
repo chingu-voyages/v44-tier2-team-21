@@ -30,7 +30,7 @@ const Arena = () => {
     setIsAnimating((prev) => !prev);
   };
   return (
-    <div className='w-3/6 px-16 mx-auto h-full bg-[#1e1e1e] text-[#FFFFFF] flex flex-col items-center'>
+    <div className='w-3/6 h-full bg-[#1e1e1e] text-[#FFFFFF] flex flex-col items-center'>
       <Canvas isAnimating={isAnimating} speed={parseInt(speed)} />
       <div>
         <div className='speed-battle my-12 flex justify-center items-center'>
