@@ -6,7 +6,7 @@ import AddedBots from "./AddedBots";
 import { BotContext } from "../context/botcontext/BotState";
 
 const Controls = () => {
-  const [show, setShow] = useState(false);
+  const [show, setShow] = useState(true);
   const [name, setName] = useState("");
   const [editBotData, setEditBotData] = useState(null);
   const { botdata, setMainState, mainState } = useContext(BotContext);
@@ -84,7 +84,8 @@ const Controls = () => {
     setShow(false);
   };
 
-  const openMenu = () => {
+  const handleClick = (bot) => {
+    editBot(bot);
     setShow(true);
   };
 
@@ -99,19 +100,20 @@ const Controls = () => {
             bot={bot}
             key={bot.id}
             handleClick={() => editBot(bot)}
+            openMenu={handleClick}
           />
         );
       })}
       {!show && (
         <button
-          onClick={openMenu}
+          onClick={handleClick}
           className={
-            botdata.length === 1
+            botdata.length === 4
               ? "hidden"
               : "px-9 py-2 mt-3 rounded-full bg-[#D9D9D9] text-[#000000]"
           }
         >
-          Menu
+          + Add Bot
         </button>
       )}
       {show && (
