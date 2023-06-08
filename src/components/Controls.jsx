@@ -6,7 +6,7 @@ import AddedBots from "./AddedBots";
 import { BotContext } from "../context/botcontext/BotState";
 
 const Controls = () => {
-  const [show, setShow] = useState(true);
+  const [show, setShow] = useState(false);
   const [name, setName] = useState("");
   const [editBotData, setEditBotData] = useState(null);
   const { botdata, setMainState, mainState } = useContext(BotContext);
@@ -84,9 +84,9 @@ const Controls = () => {
     setShow(false);
   };
 
-  const handleClick = (bot) => {
-    editBot(bot);
-    setShow(true);
+  const handleClick = () => {
+    setName("");
+    setShow(!show);
   };
 
   return (
