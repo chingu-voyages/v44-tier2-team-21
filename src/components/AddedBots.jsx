@@ -3,8 +3,13 @@ import menu from "../assets/menu.svg";
 import { BotContext } from "../context/botcontext/BotState";
 import { contructRandomSvg } from "../helper/BotFunctions";
 
-const AddedBots = ({ bot, handleClick, openMenu }) => {
+const AddedBots = ({ bot, hideEditForm, setHideEditForm, setCurrentBot }) => {
   const { botdata, setMainState } = useContext(BotContext);
+
+  const handleClick = () => {
+    setHideEditForm(!hideEditForm);
+    setCurrentBot(bot);
+  };
 
   return (
     <div className="flex items-center justify-center">
