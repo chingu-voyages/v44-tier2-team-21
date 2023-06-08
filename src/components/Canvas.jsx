@@ -20,7 +20,7 @@ function Canvas({ isAnimating, speed, stopAnimation }) {
   let animationFrameId = useRef(null);
 
   const data = useContext(BotContext);
-  const selectedBotsData = data.botdata.filter((bot) => {
+  const selectedBotsData = data?.botdata?.filter((bot) => {
     if (bot.selected === true) {
       return bot;
     }
