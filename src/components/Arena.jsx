@@ -1,7 +1,6 @@
 import { useContext, useState } from 'react';
 import Canvas from './Canvas';
 import { BotContext } from '../context/botcontext/BotState';
-import Instructions from './Instructions';
 import InstructionsModalButton from './InstructionsModalButton';
 import InstructionsModal from './InstructionsModal';
 
@@ -63,7 +62,6 @@ const Arena = () => {
           <InstructionsModalButton
             handleButtonClick={handleButtonClick}
           />
-          <Instructions />
         </div>
       </div>
       {isInstructionsModalOpen && (
