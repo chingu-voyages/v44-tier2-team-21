@@ -47,6 +47,7 @@ const Arena = () => {
               onChange={(e) => {
                 setSpeed(e.target.value);
               }}
+              className='appearance-none bg-red-500'
             />
           </div>
           <button
