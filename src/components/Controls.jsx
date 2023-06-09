@@ -18,6 +18,8 @@ const Controls = () => {
   const directionRef = useRef("");
   const operationRef = useRef("");
 
+  console.log(botdata);
+
   const isNameUnavailable = () =>
     botdata.some(
       (bot) => bot.name === name && (!editBotData || bot.id !== editBotData.id)
@@ -27,7 +29,7 @@ const Controls = () => {
     e.preventDefault();
 
     const formData = {
-      id: editBotData ? editBotData.id : botdata.length + 1,
+      id: new Date(),
       name,
       bool: parseInt(boolRef?.current.value),
       color: colorRef?.current?.value || "hotpink",
