@@ -10,8 +10,6 @@ const EditBots = ({ hideEditForm, setHideEditForm, currentBot }) => {
   const [botInitDirection, setInitDirection] = useState(initDirection);
   const [botOperation, setOperation] = useState(operation);
 
-  console.log(mainState);
-
   useEffect(() => {
     setName(name);
     setColor(color);
@@ -45,9 +43,13 @@ const EditBots = ({ hideEditForm, setHideEditForm, currentBot }) => {
   };
 
   const handleDelete = () => {
-    const deleteBot = [...botdata].splice(botdata.indexOf(currentBot), 1);
     setMainState({
-      botdata: botdata.length === 1 ? [] : deleteBot,
+      botdata:
+        botdata.length === 1
+          ? []
+          : botdata.filter((bot) => {
+              return bot.id != currentBot.id;
+            }),
     });
   };
 
