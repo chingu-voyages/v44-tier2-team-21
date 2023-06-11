@@ -36,7 +36,7 @@ Once you have completed the installation steps, you can run the application loca
 
 1.  Add bots by entering a name, a color, and then selecting
           their boolean value, initial direction of movement, and
-          their opertation. You can add up to four bots.
+          their operation. You can add up to four bots.
 2. Select the bots you wish to play by clicking on them in the
           list.
 3. Press the Battle! button to begin the match.
