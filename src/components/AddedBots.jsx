@@ -1,5 +1,4 @@
 import { useContext } from "react";
-import menu from "../assets/menu.svg";
 import { BotContext } from "../context/botcontext/BotState";
 import { contructRandomSvg } from "../helper/BotFunctions";
 

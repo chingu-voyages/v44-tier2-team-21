@@ -17,7 +17,7 @@ const Scoreboard = ({ scores }) => {
       return 0;
     };
 
-    const sortedData = [...data?.botdata].sort(compare);
+    const sortedData = [...data.botdata].sort(compare);
     setLeaderData(sortedData);
   }, [JSON.stringify(data.botdata)]);
 

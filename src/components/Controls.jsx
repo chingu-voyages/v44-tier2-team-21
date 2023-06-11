@@ -1,5 +1,4 @@
 import { useContext, useState, useRef, useEffect } from "react";
-import icon2 from "../assets/ghosss.svg";
 import AddedBots from "./AddedBots";
 import EditBots from "./EditBots";
 
@@ -17,8 +16,6 @@ const Controls = () => {
   const colorRef = useRef("");
   const directionRef = useRef("");
   const operationRef = useRef("");
-
-  console.log(botdata);
 
   const isNameUnavailable = () =>
     botdata.some(

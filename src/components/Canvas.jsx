@@ -5,9 +5,9 @@ import { BotContext } from "../context/botcontext/BotState";
 import {
   botCollision,
   constructBotsArray,
-  getUniqueArray,
   returnBoolAfterOperation,
   setWallCollisions,
+  checkWinningBot,
 } from "../helper/BotFunctions";
 
 Canvas.propTypes = {
@@ -15,7 +15,7 @@ Canvas.propTypes = {
   speed: PropTypes.number.isRequired,
 };
 
-function Canvas({ isAnimating, speed, stopAnimation }) {
+function Canvas({ isAnimating, speed }) {
   const canvasRef = useRef(null);
   let animationFrameId = useRef(null);
 
@@ -111,56 +111,14 @@ function Canvas({ isAnimating, speed, stopAnimation }) {
           bot1.bool
         );
         // * Check winning bot
-        if (bot1BoolResultOperation === bot2BoolResultOperation) {
-          // !THIS IS A TIE LOGIC
-          console.log("TIE", bot1BoolResultOperation, bot2BoolResultOperation);
-
-          if (botsArray.length === 2) {
-            // * tie breaker: randomly select a winner
-            const randomWinner = Math.random() < 0.5 ? bot1 : bot2;
-            const loser = randomWinner === bot1 ? bot2 : bot1;
-
-            // * remove the losing bot from botsArray
-            botsArray.splice(botsArray.indexOf(loser), 1);
-          }
-        } else if (
-          bot1BoolResultOperation === 1 &&
-          bot2BoolResultOperation === 0
-        ) {
-          // !THIS IS WHEN BOT1 WINS
-
-          // * bot1 wins, remove bot2 from botsArray
-          botsArray.splice(botsArray.indexOf(bot2), 1);
-          // * Increment Score at the main state
-
-          const newBotData = data.botdata.map((elem) => {
-            if (elem.id === bot1.id) {
-              elem.score++;
-            }
-            return elem;
-          });
-          data.setMainState({ botdata: newBotData });
-        } else if (
-          bot2BoolResultOperation === 1 &&
-          bot1BoolResultOperation === 0
-        ) {
-          // !THIS IS WHEN BOT2 WINS
-
-          // *bot2 wins, remove bot1 from botsArray
-          botsArray.splice(botsArray.indexOf(bot1), 1);
-
-          // * Increment Score
-
-          const newBotData = data.botdata.map((elem) => {
-            if (elem.id === bot2.id) {
-              elem.score++;
-            }
-            return elem;
-          });
-          data.setMainState({ botdata: newBotData });
-        } else {
-          console.log("there's something wrong with your code");
-        }
+        checkWinningBot(
+          bot1BoolResultOperation,
+          bot2BoolResultOperation,
+          bot1,
+          bot2,
+          botsArray,
+          data
+        );
       }
 
       if (isAnimating) {
