@@ -55,24 +55,23 @@ const EditBots = ({ hideEditForm, setHideEditForm, currentBot }) => {
 
   return (
     <form
-      className="bot-config border rounded-xl p-2 mt-5 mx-3"
+      className="bot-config border rounded-xl p-3 mt-5 mx-3 flex flex-col items-start"
       hidden={hideEditForm}
       onSubmit={handleSubmit}
     >
-      <div className="icon-and-name  flex flex-row">
+      <div className="icon-and-name flex flex-row w-full items-start justify-between mb-1">
         <label htmlFor="name" className="hidden">
           name
         </label>
-        <div>
-          <input
-            type="text"
-            placeholder="NAME"
-            className="w-3/5 p-2 border border-white rounded-xl bg-transparent"
-            maxLength={10}
-            value={botName}
-            onChange={(e) => setName(e.target.value)}
-          />
-        </div>
+
+        <input
+          type="text"
+          placeholder="NAME"
+          className="w-3/5 p-2 mr-2 border border-white rounded-xl bg-transparent"
+          maxLength={10}
+          value={botName}
+          onChange={(e) => setName(e.target.value)}
+        />
 
         <label htmlFor="color" className="hidden">
           Color
@@ -80,12 +79,12 @@ const EditBots = ({ hideEditForm, setHideEditForm, currentBot }) => {
         <input
           type="text"
           placeholder="COLOR"
-          className="w-3/5 p-2 border border-white rounded-xl bg-transparent h-10"
+          className="w-2/5 p-2 border border-white rounded-xl bg-transparent h-10"
           value={botColor}
           onChange={(e) => setColor(e.target.value)}
         />
       </div>
-      <div className="bool form-group m-3">
+      <div className="bool form-group my-2">
         <label htmlFor="bool" className="hidden">
           BOOLEAN VALUE
         </label>
@@ -103,7 +102,7 @@ const EditBots = ({ hideEditForm, setHideEditForm, currentBot }) => {
           <option defaultValue="1">1</option>
         </select>
       </div>
-      <div className="init-direction form-group m-3">
+      <div className="init-direction form-group my-2">
         <label htmlFor="init-direction" className="hidden">
           INITIAL DIRECTION
         </label>
@@ -123,7 +122,7 @@ const EditBots = ({ hideEditForm, setHideEditForm, currentBot }) => {
           <option defaultValue="west">WEST</option>
         </select>
       </div>
-      <div className="operation form-group">
+      <div className="operation form-group my-2">
         <label htmlFor="operation" className="hidden">
           OPERATION
         </label>
@@ -143,13 +142,15 @@ const EditBots = ({ hideEditForm, setHideEditForm, currentBot }) => {
           <option defaultValue="NOR">NOR</option>
         </select>
       </div>
-      <button className="border rounded-xl px-4 py-1">SAVE</button>
-      <button
-        className="border rounded-xl px-4 py-1 bg-red-600"
-        onClick={handleDelete}
-      >
-        DELETE
-      </button>
+      <div className="buttons">
+        <button className="border rounded-xl px-4 py-1">SAVE</button>
+        <button
+          className="ml-2 border rounded-xl px-4 py-1 bg-red-600"
+          onClick={handleDelete}
+        >
+          DELETE
+        </button>
+      </div>
     </form>
   );
 };

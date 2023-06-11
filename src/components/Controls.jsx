@@ -54,7 +54,7 @@ const Controls = () => {
   };
 
   return (
-    <div className="mr-6 w-full h-full bg-[#1E1E1E] text-[#FFFFFF] text-center border-4 rounded-md border-[#FF0000] max-w-sm">
+    <div className="w-full h-full bg-transparent text-[#FFFFFF] text-center border-4 rounded-md border-[#FF0000] max-w-sm px-2">
       <h2 className="mb-7 text-2xl mt-5">GAME CONFIGURATION</h2>
       <h3 className="mb-3">{botdata?.length ? "Select Players" : ""}</h3>
       {/* displaying bot data */}
@@ -69,11 +69,13 @@ const Controls = () => {
           />
         );
       })}
-      <EditBots
-        hideEditForm={hideEditForm}
-        setHideEditForm={setHideEditForm}
-        currentBot={currentBot}
-      />
+      {!hideEditForm && (
+        <EditBots
+          hideEditForm={hideEditForm}
+          setHideEditForm={setHideEditForm}
+          currentBot={currentBot}
+        />
+      )}
       {!show && (
         <button
           onClick={handleClick}
@@ -90,28 +92,21 @@ const Controls = () => {
       {show && (
         <div className="panel-to-show-hide">
           <form
-            className="bot-config border rounded-xl p-2 mt-5 mx-3"
+            className="bot-config border rounded-xl p-3 mt-5 mx-3 flex flex-col items-start"
             onSubmit={handleSubmit}
           >
-            <div className="icon-and-name  flex flex-row">
+            <div className="icon-and-name flex flex-row w-full items-start justify-between mb-1">
               <label htmlFor="name" className="hidden">
                 name
               </label>
-              <div>
-                <input
-                  required
-                  type="text"
-                  placeholder="NAME"
-                  className="w-3/5 p-2 border border-white rounded-xl bg-transparent"
-                  maxLength={10}
-                  onChange={(e) => setName(e.target.value)}
-                />
-                {isNameUnavailable() ? (
-                  <p className="text-xs text-red-500">
-                    this name is already in use
-                  </p>
-                ) : null}
-              </div>
+              <input
+                required
+                type="text"
+                placeholder="NAME"
+                className="w-3/5 p-2 mr-2 border border-white rounded-xl bg-transparent"
+                maxLength={10}
+                onChange={(e) => setName(e.target.value)}
+              />
 
               <label htmlFor="color" className="hidden">
                 Color
@@ -119,11 +114,16 @@ const Controls = () => {
               <input
                 type="text"
                 placeholder="COLOR"
-                className="w-3/5 p-2 border border-white rounded-xl bg-transparent h-10"
+                className="w-2/5 p-2 border border-white rounded-xl bg-transparent h-10"
                 ref={colorRef}
               />
             </div>
-            <div className="bool form-group m-3">
+            {isNameUnavailable() ? (
+              <p className="text-xs text-red-500 text-start">
+                this name is already in use
+              </p>
+            ) : null}
+            <div className="bool form-group my-2">
               <label htmlFor="bool" className="hidden">
                 BOOLEAN VALUE
               </label>
@@ -141,7 +141,7 @@ const Controls = () => {
                 <option defaultValue="1">1</option>
               </select>
             </div>
-            <div className="init-direction form-group m-3">
+            <div className="init-direction form-group my-2">
               <label htmlFor="init-direction" className="hidden">
                 INITIAL DIRECTION
               </label>
@@ -161,7 +161,7 @@ const Controls = () => {
                 <option defaultValue="west">WEST</option>
               </select>
             </div>
-            <div className="operation form-group">
+            <div className="operation form-group my-2">
               <label htmlFor="operation" className="hidden">
                 OPERATION
               </label>
@@ -182,7 +182,7 @@ const Controls = () => {
               </select>
             </div>
             <button
-              className="border rounded-xl px-4 py-1"
+              className="w-full border rounded-xl px-4 py-1 mt-1"
               type="submit"
               disabled={isNameUnavailable()}
             >
