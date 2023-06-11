@@ -1,17 +1,21 @@
 import { useContext } from "react";
-import menu from "../assets/menu.svg";
 import { BotContext } from "../context/botcontext/BotState";
 import { contructRandomSvg } from "../helper/BotFunctions";
 
-const AddedBots = ({ bot, handleClick, openMenu }) => {
+const AddedBots = ({ bot, hideEditForm, setHideEditForm, setCurrentBot }) => {
   const { botdata, setMainState } = useContext(BotContext);
+
+  const handleClick = () => {
+    setHideEditForm(!hideEditForm);
+    setCurrentBot(bot);
+  };
 
   return (
     <div className="flex items-center justify-center">
       <div
         className={`${
           bot.selected ? "border-red-500" : "border-white"
-        } bot-added border rounded-xl flex flex-row flex-grow my-2 p-2 items-center cursor-pointer`}
+        } bot-added border rounded-xl flex flex-row flex-grow m-2 p-2 items-center cursor-pointer `}
         key={bot.id}
         onClick={() => {
           const newBotData = botdata.map((elem) => {
@@ -33,9 +37,9 @@ const AddedBots = ({ bot, handleClick, openMenu }) => {
         </div>
       </div>
       <div className="flex flex-shrink-0">
-        <h1 onClick={handleClick} className="ml-4 cursor-pointer">
-          EDIT
-        </h1>
+        <button onClick={handleClick} className="cursor-pointer">
+          <p className="text-sm">EDIT</p>
+        </button>
       </div>
     </div>
   );

@@ -25,7 +25,7 @@ const App = () => {
         <BotProvider>
           <div className="App h-screen bg-[#1e1e1e] font-default">
             <Header />
-            <div className="h-5/6 w-full px-16 flex mx-auto py-7">
+            <div className="h-5/6 w-full px-16 justify-center space-x-3 flex">
               <Scoreboard />
               <Arena />
               <Controls />

@@ -23,7 +23,7 @@ export const XOR = (b1, b2) => {
 };
 
 export const NOR = (b1, b2) => {
-  if (b1 || b2 === 0) {
+  if (!(b1 || b2)) {
     return 1;
   } else {
     return 0;

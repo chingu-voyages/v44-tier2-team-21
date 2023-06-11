@@ -56,9 +56,11 @@ export const botCollision = (botArr) => {
   // * Return the colliding array
   return collidingArray;
 };
+
 /**
  * * Function to return Unique Array
  */
+
 export const getUniqueArray = (arr1, arr2) => {
   const uniqueArr = [];
   [...arr1, ...arr2].forEach((bot, i) => {
@@ -133,6 +135,58 @@ export const returnBoolAfterOperation = (operation, bool1, bool2) => {
       return NOR(bool1, bool2);
     default:
       break;
+  }
+};
+
+/**
+ * * Function if bot wins
+ */
+
+export const ifBotWins = (data, botsArray, winningBot, losingBot) => {
+  // * bot1 wins, remove bot2 from botsArray
+  botsArray.splice(botsArray.indexOf(losingBot), 1);
+
+  // * Increment Score at the main state
+  const newBotData = data.botdata.map((elem) => {
+    if (elem.id === winningBot.id) {
+      elem.score++;
+    }
+    return elem;
+  });
+
+  data.setMainState({ botdata: newBotData });
+};
+
+/**
+ * * Function to check winning bot
+ */
+
+export const checkWinningBot = (
+  bot1BoolResultOperation,
+  bot2BoolResultOperation,
+  bot1,
+  bot2,
+  botsArray,
+  data
+) => {
+  if (bot1BoolResultOperation === bot2BoolResultOperation) {
+    // !THIS IS A TIE LOGIC
+    if (botsArray.length === 2) {
+      // * tie breaker: randomly select a winner
+      const randomWinner = Math.random() < 0.5 ? bot1 : bot2;
+      const loser = randomWinner === bot1 ? bot2 : bot1;
+
+      // * remove the losing bot from botsArray
+      botsArray.splice(botsArray.indexOf(loser), 1);
+    }
+  } else if (bot1BoolResultOperation === 1 && bot2BoolResultOperation === 0) {
+    //* THIS IS WHEN BOT1 WINS
+    ifBotWins(data, botsArray, bot1, bot2);
+  } else if (bot2BoolResultOperation === 1 && bot1BoolResultOperation === 0) {
+    //* THIS IS WHEN BOT2 WINS
+    ifBotWins(data, botsArray, bot2, bot1);
+  } else {
+    console.log("there's something wrong with your code");
   }
 };
 
